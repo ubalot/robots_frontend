@@ -10,7 +10,8 @@ export default class RobotsTxtForm extends React.Component {
     super(props)
 
     this.handleChange = this.handleChange.bind(this)
-    this.handleAddButton = this.handleAddButton.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClear = this.handleClear.bind(this)
 
     this.state = {
       value: false
@@ -21,16 +22,21 @@ export default class RobotsTxtForm extends React.Component {
     this.setState({value: event.target.value})
   }
 
-  handleAddButton () {
-    console.log(this.state.value)
+  handleSubmit (event) {
+    alert(this.state.value)
+    event.preventDefault()
+  }
+
+  handleClear (event) {
+
   }
 
   render () {
     return (
       <Paper style={style}>
         <Card>
-          <CardTitle title="Fill in, then press Add" subtitle="" />
-          <Paper zDepth={1} style={style}>
+          <CardTitle title="Fill in, then press Submit" subtitle="All fields are necessary." />
+          <form onSubmit={this.handleSubmit}>
             <TextField
               hintText="Domain"
               name="domain"
@@ -53,11 +59,11 @@ export default class RobotsTxtForm extends React.Component {
               underlineShow={true}
             />
             <Divider />
-          </Paper>
-          <CardActions>
-            <FlatButton label="Add" onClick={this.handleAddButton} />
-            <FlatButton label="Clear" />
-          </CardActions>
+            <CardActions>
+              <FlatButton label="Submit" onClick={this.handleSubmit} />
+              <FlatButton label="Clear" onClick={this.handleClear} />
+            </CardActions>
+          </form>
         </Card>
       </Paper>
     )
