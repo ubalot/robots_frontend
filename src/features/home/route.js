@@ -5,6 +5,7 @@ import {
   DefaultPage,
   TestPage,
   ReadRobotsTxt,
+  RobotsTxtForm,
 } from './';
 
 export default {
@@ -18,5 +19,6 @@ export default {
     },
     { path: 'test-page', name: 'Test page', component: TestPage },
     { path: 'read-robots-txt', name: 'Read robots txt', component: ReadRobotsTxt },
+    { path: 'robotstxt-form', name: 'Robots txt form', component: RobotsTxtForm },
   ],
 };

@@ -11,14 +11,23 @@ export class ReadRobotsTxt extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  renderForm() {
+    return (
+      <div id="read-robotstxt-form">
+        <TextField hintText="insert robots.txt URL here" />
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="home-read-robots-txt">
         <Paper>
           <Card>
             <CardTitle
-              title="TITLE"
+              title="Get robots.txt content"
             />
+            {this.renderForm()}
           </Card>
         </Paper>
       </div>
