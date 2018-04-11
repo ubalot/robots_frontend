@@ -51,6 +51,7 @@ export default class App extends Component {
           </div> */}
           <div className="page-container">
             {this.props.children}
+            {console.log('Children', this.props.children)}
           </div>
         </div>
       </MuiThemeProvider>
