@@ -10,6 +10,9 @@ const initialState = {
   redditReactjsList: [],
   fetchRedditReactjsListError: null,
   fetchRedditReactjsListPending: false,
+  readRobotsTxtContent: '',
+  fetchRobotstxtPending: false,
+  fetchRobotstxtError: null,
 };
 
 export default initialState;
