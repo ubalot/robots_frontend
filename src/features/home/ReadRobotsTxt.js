@@ -23,82 +23,67 @@ export class ReadRobotsTxt extends Component {
     // robots_txt: ''
   };
 
-  // constructor(props) {
-  //     super(props);
-  //     this.state = {
-  //         input_url: '',
-  //         robots_txt: ''
-  //     };
-  // }
-
-  handleSubmit = () => {
-    let arg = `url=${this.state.input_url}`;
-    let robotsTxtUrl = `${backendServer}/content?${arg}`;
-    
-    // fetch(robotsTxtUrl)
-    //   .then(response => reshttps://www.google.com/robots.txtponse.json())
-    //   .then(text => this.setState({robots_txt: text}))
-    //   // .then(text => this.props.robots_txt = text)
-    //   .catch(error => console.error(error));https://www.google.com/robots.txt
-    
-    // // let robotstxtContent = '';
-    // let robotstxtContent = axios.get(robotsTxtUrl)
-    //   // .then(res => this.setState({robots_txt: res.data.data.data}))
-    //   // .then(res => {console.log('res',res.data.data); /*robotstxtContent = res.data.data*/})
-    //   .then(res => {
-    //     dispatch({
-    //       type: HOME_ADD_READ_ROBOTS_TXT,
-    //       text: res.data.data
-    //     })
-    //   })
-    //   // .catch(error => console.error(error));
-    
-    // console.log('robotstxtContent', robotstxtContent)
-    // console.log('res', res)
-    // console.log('robots_txt', typeof this.state.robots_txt, this.state.robots_txt)
-    // console.log('COMMON', this.state.robots_txt);
-
-    const { counterPlusOne, counterMinusOne, resetCounter, fetchRedditReactjsList, fetchRobotstxt /*, addReadRobotsTxt */ } = this.props.actions;
-    // let test = robotstxtContent//'CIAO'
-    // addReadRobotsTxt(test);
-    console.log('PRIMA DI fetchRobotstxt')
-    fetchRobotstxt(robotsTxtUrl)
-    console.log('RES', res)
+  constructor(props) {
+    super(props);
+    this.state = {
+      input_url: ''
+    };
   }
 
+  handleSubmit = () => {
+    const arg = `url=${this.state.input_url}`;
+    const robotsTxtUrl = `${backendServer}/content?${arg}`;
+    // const { counterPlusOne, counterMinusOne, resetCounter, fetchRedditReactjsList, fetchRobotstxt } = this.props.actions;
+    const { fetchRobotstxt } = this.props.actions;
+    
+    fetchRobotstxt(robotsTxtUrl);
+  }
+
+
+  resetForm = () => {
+    this.setState({input_url: ''});
+    document.getElementById('text-field').value = '';
+  }
 
   renderForm() {
     return (
       <div className="read-robotstxt-form">
         <form>
-          <div>
-            <TextField
-              hintText="insert robots.txt URL here"
-              onChange={event => this.setState({input_url: event.target.value})}
-              // onChange={event => this.props.input_url = event.target.value}
-            />
-          </div>
-          <div>
-            <RaisedButton label="Submit" className="read-robotstxt-buttons" onClick={this.handleSubmit} />
-            <RaisedButton label="Cancel" className="read-robotstxt-buttons" onClick={this.resetForm} />
-          </div>
+          <TextField
+            id="text-field"
+            className="give-me-some-space"
+            hintText="insert robots.txt URL here"
+            onChange={event => this.setState({input_url: event.target.value})}
+            // onChange={event => this.props.input_url = event.target.value}
+          />
+          <CardActions>
+            <FlatButton label="Submit" className="give-me-some-space" onClick={this.handleSubmit} />
+            <FlatButton label="Cancel" className="read-robotstxt-buttons" onClick={this.resetForm} />
+          </CardActions>
         </form>
       </div>
     );
   }
 
   renderContent() {
+    const { counterPlusOne, counterMinusOne, resetCounter, fetchRedditReactjsList, fetchRobotstxt, clearRobotstxt } = this.props.actions;
+
     return (
-      <CardText>
-        {this.props.home.readRobotsTxtContent}
-      </CardText>
+      <div>
+        <CardText>
+          {this.props.home.readRobotsTxtContent}
+        </CardText>
+        <CardActions>
+          <FlatButton label="clear" onClick={() => clearRobotstxt()} />
+        </CardActions>
+      </div>
     );
   }
 
   render() {
     // const { count, fetchRedditReactjsListPending, redditReactjsList, fetchRedditReactjsListError } = this.props.common;
     const { count, fetchRedditReactjsListPending, redditReactjsList, fetchRedditReactjsListError } = this.props.home;
-    const { counterPlusOne, counterMinusOne, resetCounter, fetchRedditReactjsList, fetchRobotstxt /*, addReadRobotsTxt */ } = this.props.actions;
+    const { counterPlusOne, counterMinusOne, resetCounter, fetchRedditReactjsList, fetchRobotstxt } = this.props.actions;
     return (
       <div className="home-read-robots-txt">
         <Paper>
@@ -106,7 +91,6 @@ export class ReadRobotsTxt extends Component {
             <CardTitle
               title="Get robots.txt content"
             />
-            {console.log('CONTENT', this.props.home.readRobotsTxtContent) }
             {this.props.home.readRobotsTxtContent ? this.renderContent() : this.renderForm()}
           </Card>
         </Paper>

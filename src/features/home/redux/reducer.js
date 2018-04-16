@@ -13,14 +13,15 @@ import { reducer as counterMinusOneReducer } from './counterMinusOne';
 import { reducer as resetCounterReducer } from './resetCounter';
 import { reducer as fetchRedditReactjsListReducer } from './fetchRedditReactjsList';
 import { reducer as fetchRobotstxtReducer } from './fetchRobotstxt';
+import { reducer as clearRobotstxtReducer } from './clearRobotstxt';
 
 const reducers = [
   counterPlusOneReducer,
   counterMinusOneReducer,
   resetCounterReducer,
   fetchRedditReactjsListReducer,
-  addReadRobotsTxtReducer,
   fetchRobotstxtReducer,
+  clearRobotstxtReducer,
 ];
 
 export default function reducer(state = initialState, action) {

@@ -39,36 +39,43 @@ export class RobotsTxtForm extends Component {
   render () {
     return (
       <div className="home-robots-txt-form">
-      <Paper>
-        <Card>
-          <CardTitle title="Fill in, then press Submit" subtitle="All fields are necessary." />
-          <form onSubmit={this.handleSubmit}>
-            <TextField
-              hintText="Domain"
-              name="domain"
-              underlineShow={true}
-              onChange={this.handleChange}
+        <Paper>
+          <Card>
+            <CardTitle
+              title="Fill in, then press Submit"
+              subtitle="All fields are necessary."
             />
-            <Divider />
-            <TextField
-              hintText="Website url"
-              name="websiteUrl"
-              underlineShow={true}
-            />
-            <Divider />
-            <TextField
-              hintText="RobotsTxt url"
-              name="RobotsTxtUrl"
-              underlineShow={true}
-            />
-            <Divider />
-            <CardActions>
-              <FlatButton label="Submit" onClick={this.handleSubmit} />
-              <FlatButton label="Clear" onClick={this.handleClear} />
-            </CardActions>
-          </form>
-        </Card>
-      </Paper>
+            {/* <form onSubmit={this.handleSubmit}> */}
+            <form>
+              <TextField
+                className="give-me-some-space"
+                hintText="Domain"
+                name="domain"
+                underlineShow={true}
+                onChange={this.handleChange}
+              /><br />
+              {/* <Divider /> */}
+              <TextField
+                className="give-me-some-space"
+                hintText="Website url"
+                name="websiteUrl"
+                underlineShow={true}
+              /><br />
+              {/* <Divider /> */}
+              <TextField
+                className="give-me-some-space"
+                hintText="RobotsTxt url"
+                name="RobotsTxtUrl"
+                underlineShow={true}
+              />
+              {/* <Divider /> */}
+              <CardActions>
+                <FlatButton label="Submit" onClick={this.handleSubmit} />
+                <FlatButton label="Clear" onClick={this.handleClear} />
+              </CardActions>
+            </form>
+          </Card>
+        </Paper>
       </div>
     )
   }

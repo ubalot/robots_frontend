@@ -26,7 +26,7 @@ export function fetchRobotstxt(url = '') {
       doRequest.then( */
       axios.get(url).then(
         (res) => {
-          console.log('RES', res)
+          // console.log('RES', res)
           dispatch({
             type: HOME_FETCH_ROBOTSTXT_SUCCESS,
             data: res.data.data,
