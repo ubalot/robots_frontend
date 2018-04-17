@@ -7,6 +7,7 @@
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
 
 const initialState = {
+  backendServer: 'http://127.0.0.1:8000'
 };
 
 export default initialState;

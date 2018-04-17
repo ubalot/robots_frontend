@@ -6,16 +6,13 @@ import { connect } from 'react-redux';
 import { Paper, TextField, Card, CardTitle, CardActions, FlatButton, Divider, RaisedButton, CardText } from 'material-ui';
 import * as actions from './redux/actions';
 
-const backendServer = 'http://127.0.0.1:8000';
-
 
 export class ReadRobotsTxt extends Component {
   static propTypes = {
     children: PropTypes.node,
-    // common: PropTypes.object.isRequired,
+    common: PropTypes.object.isRequired,
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
-    // robots_txt: PropTypes.string,
   };
 
   static defaultProps = {
@@ -25,24 +22,47 @@ export class ReadRobotsTxt extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      input_url: ''
-    };
+
+    this.textField = React.createRef();
+
+    // this.state = {
+    //   input_url: ''
+    // };
+
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetForm = this.resetForm.bind(this);
+    // this.clearRobotstxt = this.clearRobotstxt.bind(this);
   }
 
-  handleSubmit = () => {
-    const arg = `url=${this.state.input_url}`;
+  handleSubmit() {
+    const { backendServer } = this.props.common;
+
+    const arg = `url=${this.textField.current.input.value}`
     const robotsTxtUrl = `${backendServer}/content?${arg}`;
-    // const { counterPlusOne, counterMinusOne, resetCounter, fetchRedditReactjsList, fetchRobotstxt } = this.props.actions;
-    const { fetchRobotstxt } = this.props.actions;
+    // console.log('robotsTxtUrl', robotsTxtUrl)
     
-    fetchRobotstxt(robotsTxtUrl);
+    this.props.actions.fetchRobotstxt(robotsTxtUrl);
   }
 
 
-  resetForm = () => {
-    this.setState({input_url: ''});
-    document.getElementById('text-field').value = '';
+  resetForm() {
+    // this.setState({input_url: ''});
+
+    // console.log('textField', this.textField.current.state)
+
+    // const textField = document.getElementById('text-field')
+    // this.textField.current.value = '';
+    
+    // this.textField.setState({value: ''})
+    // this.textField.reset()
+    // console.log('AAAA:', this.textField.state.value)
+    this.textField.current.setState({value: ''})
+    // this.setState({value: ''})
+    // this.textField.setState({value: ''})
+    this.textField.current.focus();
+
+    // console.log('textField', this.textField.current.state)
   }
 
   renderForm() {
@@ -50,11 +70,15 @@ export class ReadRobotsTxt extends Component {
       <div className="read-robotstxt-form">
         <form>
           <TextField
-            id="text-field"
+            // id="text-field"
+            // ref={node => this.textField = node}
+            ref={this.textField}
             className="give-me-some-space"
             hintText="insert robots.txt URL here"
-            onChange={event => this.setState({input_url: event.target.value})}
-            // onChange={event => this.props.input_url = event.target.value}
+            // onChange={event => this.setState({input_url: event.target.value})}
+            onChange={event => this.textField.current.setState({value: event.target.value})}
+            
+            // errorText="Wrong url or page not found"
           />
           <CardActions>
             <FlatButton label="Submit" className="give-me-some-space" onClick={this.handleSubmit} />
@@ -66,24 +90,19 @@ export class ReadRobotsTxt extends Component {
   }
 
   renderContent() {
-    const { counterPlusOne, counterMinusOne, resetCounter, fetchRedditReactjsList, fetchRobotstxt, clearRobotstxt } = this.props.actions;
-
     return (
       <div>
         <CardText>
           {this.props.home.readRobotsTxtContent}
         </CardText>
         <CardActions>
-          <FlatButton label="clear" onClick={() => clearRobotstxt()} />
+          <FlatButton label="clear" onClick={this.props.actions.clearRobotstxt} />
         </CardActions>
       </div>
     );
   }
 
   render() {
-    // const { count, fetchRedditReactjsListPending, redditReactjsList, fetchRedditReactjsListError } = this.props.common;
-    const { count, fetchRedditReactjsListPending, redditReactjsList, fetchRedditReactjsListError } = this.props.home;
-    const { counterPlusOne, counterMinusOne, resetCounter, fetchRedditReactjsList, fetchRobotstxt } = this.props.actions;
     return (
       <div className="home-read-robots-txt">
         <Paper>
@@ -97,12 +116,19 @@ export class ReadRobotsTxt extends Component {
       </div>
     );
   }
+
+  /* Auto-focus on TextField when component is ready 
+   * (it doesn't work when dev tools are open)
+   */
+  componentDidMount() {
+    this.textField.current.focus();
+  }
 }
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    // common: state.common,
+    common: state.common,
     home: state.home
   };
 }
