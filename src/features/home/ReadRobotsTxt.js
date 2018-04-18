@@ -95,23 +95,27 @@ export class ReadRobotsTxt extends Component {
 
   renderContent() {
     function renderRobotsTxtContent(robotsTxt) {
-      console.log('robotsTxt', robotsTxt, typeof robotsTxt)
       const lines = robotsTxt.split('\n');
-      console.log('lines', lines)
+
+      const wrap = n => <div><br />{n}</div>;
+
       const renderedContent = lines.map(line => {
         if (line.match(/^user[\s\-]?agent/i)) {  // User-agent
-          return (<div><br /><h3>{line}</h3></div>);
-        } else if (line.match(/^(dis)?allow/i)) {  // Allow/Disallow rule
-          return (<p>{line}</p>);
-        } else if (line.match(/^Sitemap/i)) {  // Sitemap
-          return (<p><b><i>{line}</i></b></p>);
+          return wrap(<h5 className="user-agent">{line}</h5>);
+        } else if (line.match(/^allow/i)) {  // Allow rule
+          return (<p className="allow">{line}</p>);
+        } else if (line.match(/^disallow/i)) {  // Disallow rule
+          return (<p className="disallow">{line}</p>);
+        } else if (line.match(/^sitemap/i)) {  // Sitemap
+          return wrap(<p className="sitemap">{line}</p>);
+        } else if (line.match(/^#/)) {
+          return (<p className="comment">{line}</p>);
         } else {
           return (<p>{line}</p>);
         }
       });
       console.log('renderedContent', renderedContent)
       return (<div>{renderedContent}</div>);
-      // return robotsTxt;
     }
 
     return (
