@@ -54,10 +54,11 @@ export default class Header extends Component {
           } else {
             path = `${basePath}/${item.path}`;
           }
-          prev.push(<Link to={path}><MenuItem>{item.name || item.path}</MenuItem></Link>);
+          prev.push(<div key={path}><Link to={path}><MenuItem>{item.name || item.path}</MenuItem></Link></div>);
 
           if (item.childRoutes && item.childRoutes.length) {
-            prev.push(this.renderLinks(item.childRoutes, path))
+            prev.push(<div key={`${path}_wrapper`}>{this.renderLinks(item.childRoutes, path)}</div>)
+            // this.renderLinks(item.childRoutes, path)
           }
           return prev;
         }, [])}

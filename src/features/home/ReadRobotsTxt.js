@@ -25,20 +25,22 @@ export class ReadRobotsTxt extends Component {
 
     this.textField = React.createRef();
 
-    // this.state = {
-    //   input_url: ''
-    // };
-
+    this.state = {
+      input_url: '',        // store text form value
+      input_url_error: '',  // store text form error
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetForm = this.resetForm.bind(this);
+    this.clearContent = this.clearContent.bind(this);
     // this.clearRobotstxt = this.clearRobotstxt.bind(this);
   }
 
   handleSubmit() {
     const { backendServer } = this.props.common;
 
-    const arg = `url=${this.textField.current.input.value}`
+    // const arg = `url=${this.textField.current.input.value}`
+    const arg = `url=${this.state.input_url}`;
     const robotsTxtUrl = `${backendServer}/content?${arg}`;
     // console.log('robotsTxtUrl', robotsTxtUrl)
     
@@ -47,25 +49,9 @@ export class ReadRobotsTxt extends Component {
 
 
   resetForm() {
-    // this.setState({input_url: ''});
-
-    // console.log('textField', this.textField.current.state)
-
-    // const textField = document.getElementById('text-field')
-    // this.textField.current.value = '';
-    
-    // this.textField.setState({value: ''})
-    // this.textField.reset()
-    // console.log('AAAA:', this.textField.state.value)
-
-    
+    this.setState({ input_url: '', input_url_error: '' });
     this.textField.current.setState({value: ''})
-    // this.textField.current.reset()
-    
-    // this.setState({value: ''})
-    // this.textField.setState({value: ''})
     this.textField.current.focus();
-
     // console.log('textField', this.textField.current.state)
   }
 
@@ -79,9 +65,9 @@ export class ReadRobotsTxt extends Component {
             ref={this.textField}
             className="give-me-some-space"
             hintText="insert robots.txt URL here"
-            // onChange={event => this.setState({input_url: event.target.value})}
-            onChange={event => this.textField.current.setState({value: event.target.value})}
-            
+            onChange={event => this.setState({ input_url: event.target.value })}
+            // onChange={event => this.textField.current.setState({value: event.target.value})}
+            value={this.state.input_url}
             // errorText="Wrong url or page not found"
           />
           <CardActions>
@@ -93,25 +79,30 @@ export class ReadRobotsTxt extends Component {
     );
   }
 
+  clearContent() {
+    this.setState({ input_url: '' });
+    this.props.actions.clearRobotstxt();
+  }
+
   renderContent() {
     function renderRobotsTxtContent(robotsTxt) {
       const lines = robotsTxt.split('\n');
 
       const wrap = n => <div><br />{n}</div>;
 
-      const renderedContent = lines.map(line => {
+      const renderedContent = lines.map((line, i) => {
         if (line.match(/^user[\s\-]?agent/i)) {  // User-agent
-          return wrap(<h5 className="user-agent">{line}</h5>);
+          return wrap(<h5 className="user-agent" key={i}>{line}</h5>);
         } else if (line.match(/^allow/i)) {  // Allow rule
-          return (<p className="allow">{line}</p>);
+          return (<p className="allow" key={i}>{line}</p>);
         } else if (line.match(/^disallow/i)) {  // Disallow rule
-          return (<p className="disallow">{line}</p>);
+          return (<p className="disallow" key={i}>{line}</p>);
         } else if (line.match(/^sitemap/i)) {  // Sitemap
-          return wrap(<p className="sitemap">{line}</p>);
+          return wrap(<p className="sitemap" key={i}>{line}</p>);
         } else if (line.match(/^#/)) {
-          return (<p className="comment">{line}</p>);
+          return (<p className="comment" key={i}>{line}</p>);
         } else {
-          return (<p>{line}</p>);
+          return (<p key={i}>{line}</p>);
         }
       });
       console.log('renderedContent', renderedContent)
@@ -124,7 +115,7 @@ export class ReadRobotsTxt extends Component {
           {renderRobotsTxtContent(this.props.home.readRobotsTxtContent)}
         </CardText>
         <CardActions>
-          <FlatButton label="clear" onClick={this.props.actions.clearRobotstxt} />
+          <FlatButton label="clear" onClick={this.clearContent} />
         </CardActions>
       </div>
     );
@@ -153,7 +144,6 @@ export class ReadRobotsTxt extends Component {
   }
 
   componentDidUpdate() {
-    // this.textField.current.focus();
   }
 }
 
