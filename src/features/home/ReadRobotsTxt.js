@@ -58,7 +58,7 @@ export class ReadRobotsTxt extends Component {
   renderForm() {
     return (
       <div className="read-robotstxt-form">
-        <form on>
+        <form>
           <TextField
             // id="text-field"
             // ref={node => this.textField = node}
@@ -141,9 +141,6 @@ export class ReadRobotsTxt extends Component {
    */
   componentDidMount() {
     this.textField.current.focus();
-  }
-
-  componentDidUpdate() {
   }
 }
 
