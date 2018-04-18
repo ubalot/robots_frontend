@@ -58,23 +58,21 @@ export class ReadRobotsTxt extends Component {
   renderForm() {
     return (
       <div className="read-robotstxt-form">
-        <form>
-          <TextField
-            // id="text-field"
-            // ref={node => this.textField = node}
-            ref={this.textField}
-            className="give-me-some-space"
-            hintText="insert robots.txt URL here"
-            onChange={event => this.setState({ input_url: event.target.value })}
-            // onChange={event => this.textField.current.setState({value: event.target.value})}
-            value={this.state.input_url}
-            // errorText="Wrong url or page not found"
-          />
-          <CardActions>
-            <FlatButton label="Submit" className="give-me-some-space" onClick={this.handleSubmit} />
-            <FlatButton label="Cancel" className="read-robotstxt-buttons" onClick={this.resetForm} />
-          </CardActions>
-        </form>
+        <TextField
+          // id="text-field"
+          // ref={node => this.textField = node}
+          ref={this.textField}
+          className="give-me-some-space"
+          hintText="insert robots.txt URL here"
+          onChange={event => this.setState({ input_url: event.target.value })}
+          // onChange={event => this.textField.current.setState({value: event.target.value})}
+          value={this.state.input_url}
+          // errorText="Wrong url or page not found"
+        />
+        <CardActions>
+          <FlatButton label="Submit" className="give-me-some-space" onClick={this.handleSubmit} />
+          <FlatButton label="Cancel" className="read-robotstxt-buttons" onClick={this.resetForm} />
+        </CardActions>
       </div>
     );
   }
@@ -88,24 +86,24 @@ export class ReadRobotsTxt extends Component {
     function renderRobotsTxtContent(robotsTxt) {
       const lines = robotsTxt.split('\n');
 
-      const wrap = n => <div><br />{n}</div>;
+      const wrap = (n, i) => <div key={i}><br />{n}</div>;
 
       const renderedContent = lines.map((line, i) => {
         if (line.match(/^user[\s\-]?agent/i)) {  // User-agent
-          return wrap(<h5 className="user-agent" key={i}>{line}</h5>);
+          return wrap(<h5 className="user-agent">{line}</h5>, i);
         } else if (line.match(/^allow/i)) {  // Allow rule
           return (<p className="allow" key={i}>{line}</p>);
         } else if (line.match(/^disallow/i)) {  // Disallow rule
           return (<p className="disallow" key={i}>{line}</p>);
         } else if (line.match(/^sitemap/i)) {  // Sitemap
-          return wrap(<p className="sitemap" key={i}>{line}</p>);
-        } else if (line.match(/^#/)) {
+          return wrap(<p className="sitemap">{line}</p>, i);
+        } else if (line.match(/^#/)) {  // Comment
           return (<p className="comment" key={i}>{line}</p>);
         } else {
           return (<p key={i}>{line}</p>);
         }
       });
-      console.log('renderedContent', renderedContent)
+
       return (<div>{renderedContent}</div>);
     }
 
