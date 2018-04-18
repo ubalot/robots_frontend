@@ -57,7 +57,11 @@ export class ReadRobotsTxt extends Component {
     // this.textField.setState({value: ''})
     // this.textField.reset()
     // console.log('AAAA:', this.textField.state.value)
+
+    
     this.textField.current.setState({value: ''})
+    // this.textField.current.reset()
+    
     // this.setState({value: ''})
     // this.textField.setState({value: ''})
     this.textField.current.focus();
@@ -68,7 +72,7 @@ export class ReadRobotsTxt extends Component {
   renderForm() {
     return (
       <div className="read-robotstxt-form">
-        <form>
+        <form on>
           <TextField
             // id="text-field"
             // ref={node => this.textField = node}
@@ -90,10 +94,30 @@ export class ReadRobotsTxt extends Component {
   }
 
   renderContent() {
+    function renderRobotsTxtContent(robotsTxt) {
+      console.log('robotsTxt', robotsTxt, typeof robotsTxt)
+      const lines = robotsTxt.split('\n');
+      console.log('lines', lines)
+      const renderedContent = lines.map(line => {
+        if (line.match(/^user[\s\-]?agent/i)) {  // User-agent
+          return (<div><br /><h3>{line}</h3></div>);
+        } else if (line.match(/^(dis)?allow/i)) {  // Allow/Disallow rule
+          return (<p>{line}</p>);
+        } else if (line.match(/^Sitemap/i)) {  // Sitemap
+          return (<p><b><i>{line}</i></b></p>);
+        } else {
+          return (<p>{line}</p>);
+        }
+      });
+      console.log('renderedContent', renderedContent)
+      return (<div>{renderedContent}</div>);
+      // return robotsTxt;
+    }
+
     return (
       <div>
         <CardText>
-          {this.props.home.readRobotsTxtContent}
+          {renderRobotsTxtContent(this.props.home.readRobotsTxtContent)}
         </CardText>
         <CardActions>
           <FlatButton label="clear" onClick={this.props.actions.clearRobotstxt} />
@@ -122,6 +146,10 @@ export class ReadRobotsTxt extends Component {
    */
   componentDidMount() {
     this.textField.current.focus();
+  }
+
+  componentDidUpdate() {
+    // this.textField.current.focus();
   }
 }
 
