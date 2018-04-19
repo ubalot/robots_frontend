@@ -44,9 +44,16 @@ export class ReadRobotsTxt extends Component {
     const robotsTxtUrl = `${backendServer}/content?${arg}`;
     // console.log('robotsTxtUrl', robotsTxtUrl)
     
-    this.props.actions.fetchRobotstxt(robotsTxtUrl);
+    this.props.actions.fetchRobotstxt(robotsTxtUrl)
+      .then(res => {
+        //console.log('fetchRobotsTxt', res)
+        if (res.data.success == 0) {
+          this.setState({ input_url_error: res.data.message})
+          // console.log(res.data.message)
+        }
+      })
+      .catch(err => console.log('fetchRobotsTxtERROR', err))
   }
-
 
   resetForm() {
     this.setState({ input_url: '', input_url_error: '' });
@@ -59,15 +66,13 @@ export class ReadRobotsTxt extends Component {
     return (
       <div className="read-robotstxt-form">
         <TextField
-          // id="text-field"
           // ref={node => this.textField = node}
           ref={this.textField}
           className="give-me-some-space"
           hintText="insert robots.txt URL here"
           onChange={event => this.setState({ input_url: event.target.value })}
-          // onChange={event => this.textField.current.setState({value: event.target.value})}
           value={this.state.input_url}
-          // errorText="Wrong url or page not found"
+          errorText={this.state.input_url_error}
         />
         <CardActions>
           <FlatButton label="Submit" className="give-me-some-space" onClick={this.handleSubmit} />
