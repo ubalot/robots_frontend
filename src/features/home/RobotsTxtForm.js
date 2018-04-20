@@ -27,6 +27,10 @@ export class RobotsTxtForm extends Component {
     };
   }
 
+  componentDidMount() {
+    this.textField.current.focus();
+  }
+
   handleChange(event) {
     this.setState({ input_url: event.target.value, input_url_error: '' });
   }
