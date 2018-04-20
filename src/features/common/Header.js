@@ -58,7 +58,6 @@ export default class Header extends Component {
 
           if (item.childRoutes && item.childRoutes.length) {
             prev.push(<div key={`${path}_wrapper`}>{this.renderLinks(item.childRoutes, path)}</div>)
-            // this.renderLinks(item.childRoutes, path)
           }
           return prev;
         }, [])}

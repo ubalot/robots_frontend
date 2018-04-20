@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SimpleNav from '../common/SimpleNav';
+
+import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
+import * as Colors from 'material-ui/styles/colors';
+
+// import SimpleNav from '../common/SimpleNav';
 import routeConfig from '../../common/routeConfig';
 import Header from '../common/Header';
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import * as Colors from 'material-ui/styles/colors';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 
 const muiTheme = getMuiTheme({

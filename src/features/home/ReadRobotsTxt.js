@@ -1,23 +1,22 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Paper, TextField, Card, CardTitle, CardActions, FlatButton, Divider, RaisedButton, CardText } from 'material-ui';
+import { Paper, TextField, Card, CardTitle, CardActions, FlatButton, CardText } from 'material-ui';
+
 import * as actions from './redux/actions';
 
 
 export class ReadRobotsTxt extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    // children: PropTypes.node,
     common: PropTypes.object.isRequired,
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
-    // input_url: '',
-    // robots_txt: ''
+    // children:
   };
 
   constructor(props) {
@@ -26,47 +25,54 @@ export class ReadRobotsTxt extends Component {
     this.textField = React.createRef();
 
     this.state = {
-      input_url: '',        // store text form value
-      input_url_error: '',  // store text form error
+      input_url: '', // store text form value
+      input_url_error: '', // store text form error
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetForm = this.resetForm.bind(this);
     this.clearContent = this.clearContent.bind(this);
-    // this.clearRobotstxt = this.clearRobotstxt.bind(this);
+  }
+
+
+  /* Auto-focus on TextField when component is ready
+   * (it doesn't work when dev tools are open)
+   */
+  componentDidMount() {
+    this.textField.current.focus();
   }
 
   handleSubmit() {
     const { backendServer } = this.props.common;
 
-    // const arg = `url=${this.textField.current.input.value}`
     const arg = `url=${this.state.input_url}`;
-    const robotsTxtUrl = `${backendServer}/content?${arg}`;
-    // console.log('robotsTxtUrl', robotsTxtUrl)
-    
+    const path = 'content';
+    const robotsTxtUrl = `${backendServer}/${path}?${arg}`;
+
     this.props.actions.fetchRobotstxt(robotsTxtUrl)
-      .then(res => {
-        //console.log('fetchRobotsTxt', res)
-        if (res.data.success == 0) {
-          this.setState({ input_url_error: res.data.message})
-          // console.log(res.data.message)
+      .then((res) => {
+        if (res.data.success === 0) {
+          this.setState({ input_url_error: res.data.message });
         }
       })
-      .catch(err => console.log('fetchRobotsTxtERROR', err))
+      .catch(err => console.log('fetchRobotsTxtERROR', err));
   }
 
   resetForm() {
     this.setState({ input_url: '', input_url_error: '' });
-    this.textField.current.setState({value: ''})
+    this.textField.current.setState({ value: '' });
     this.textField.current.focus();
-    // console.log('textField', this.textField.current.state)
+  }
+
+  clearContent() {
+    this.setState({ input_url: '' });
+    this.props.actions.clearRobotstxt();
   }
 
   renderForm() {
     return (
       <div className="read-robotstxt-form">
         <TextField
-          // ref={node => this.textField = node}
           ref={this.textField}
           className="give-me-some-space"
           hintText="insert robots.txt URL here"
@@ -82,31 +88,25 @@ export class ReadRobotsTxt extends Component {
     );
   }
 
-  clearContent() {
-    this.setState({ input_url: '' });
-    this.props.actions.clearRobotstxt();
-  }
-
   renderContent() {
     function renderRobotsTxtContent(robotsTxt) {
       const lines = robotsTxt.split('\n');
 
-      const wrap = (n, i) => <div key={i}><br />{n}</div>;
+      const wrap = n => <div key={n}><br />{n}</div>;
 
-      const renderedContent = lines.map((line, i) => {
-        if (line.match(/^user[\s\-]?agent/i)) {  // User-agent
-          return wrap(<h5 className="user-agent">{line}</h5>, i);
-        } else if (line.match(/^allow/i)) {  // Allow rule
-          return (<p className="allow" key={i}>{line}</p>);
-        } else if (line.match(/^disallow/i)) {  // Disallow rule
-          return (<p className="disallow" key={i}>{line}</p>);
-        } else if (line.match(/^sitemap/i)) {  // Sitemap
-          return wrap(<p className="sitemap">{line}</p>, i);
-        } else if (line.match(/^#/)) {  // Comment
-          return (<p className="comment" key={i}>{line}</p>);
-        } else {
-          return (<p key={i}>{line}</p>);
+      const renderedContent = lines.map((line) => {
+        if (line.match(/^user(\s|-)?agent/i)) { // User-agent
+          return wrap(<h5 className="user-agent">{line}</h5>);
+        } else if (line.match(/^allow/i)) { // Allow rule
+          return (<p className="allow" key={line}>{line}</p>);
+        } else if (line.match(/^disallow/i)) { // Disallow rule
+          return (<p className="disallow" key={line}>{line}</p>);
+        } else if (line.match(/^sitemap/i)) { // Sitemap
+          return wrap(<p className="sitemap">{line}</p>);
+        } else if (line.match(/^#/)) { // Comment
+          return (<p className="comment" key={line}>{line}</p>);
         }
+        return (<p key={line}>{line}</p>);
       });
 
       return (<div>{renderedContent}</div>);
@@ -137,13 +137,6 @@ export class ReadRobotsTxt extends Component {
         </Paper>
       </div>
     );
-  }
-
-  /* Auto-focus on TextField when component is ready 
-   * (it doesn't work when dev tools are open)
-   */
-  componentDidMount() {
-    this.textField.current.focus();
   }
 }
 

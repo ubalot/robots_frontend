@@ -13,6 +13,8 @@ const initialState = {
   readRobotsTxtContent: '',
   fetchRobotstxtPending: false,
   fetchRobotstxtError: null,
+  addRobotstxtToDbPending: false,
+  addRobotstxtToDbError: null,
 };
 
 export default initialState;

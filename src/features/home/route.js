@@ -18,7 +18,7 @@ export default {
       isIndex: true,
     },
     { path: 'test-page', name: 'Test page', component: TestPage },
-    { path: 'read-robots-txt', name: 'Read robots txt', component: ReadRobotsTxt },
-    { path: 'robotstxt-form', name: 'Robots txt form', component: RobotsTxtForm },
+    { path: 'read-robots-txt', name: 'Quick view robots.txt', component: ReadRobotsTxt },
+    { path: 'robotstxt-form', name: 'Add robots.txt to db', component: RobotsTxtForm },
   ],
 };
