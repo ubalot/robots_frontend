@@ -2,8 +2,8 @@
 // Learn more from: http://rekit.js.org/docs/routing.html
 
 import {
-  DefaultPage,
-  TestPage,
+  // DefaultPage,
+  // TestPage,
   ReadRobotsTxt,
   RobotsTxtForm,
 } from './';
@@ -12,13 +12,20 @@ export default {
   path: '/',
   name: 'Home',
   childRoutes: [
-    { path: 'default-page',
-      name: 'Default page',
-      component: DefaultPage,
-      isIndex: true,
+    // { path: 'default-page',
+    //   name: 'Default page',
+    //   component: DefaultPage,
+    //   isIndex: true,
+    // },
+    // { path: 'test-page', name: 'Test page', component: TestPage },
+    { path: 'read-robots-txt',
+      name: 'Quick view robots.txt',
+      component: ReadRobotsTxt,
+      isIndex: true
     },
-    { path: 'test-page', name: 'Test page', component: TestPage },
-    { path: 'read-robots-txt', name: 'Quick view robots.txt', component: ReadRobotsTxt },
-    { path: 'robotstxt-form', name: 'Add robots.txt to db', component: RobotsTxtForm },
+    { path: 'robotstxt-form',
+      name: 'Add robots.txt to db',
+      component: RobotsTxtForm
+    },
   ],
 };

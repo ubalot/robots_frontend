@@ -34,12 +34,13 @@ export class ReadRobotsTxt extends Component {
     this.clearContent = this.clearContent.bind(this);
   }
 
-
-  /* Auto-focus on TextField when component is ready
-   * (it doesn't work when dev tools are open)
-   */
   componentDidMount() {
-    this.textField.current.focus();
+    /* Auto-focus on TextField when component is ready
+     * (it doesn't work when dev tools are open)
+    */
+    if (!this.props.home.readRobotsTxtContent) {
+      this.textField.current.focus();
+    }
   }
 
   handleSubmit() {
