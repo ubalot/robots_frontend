@@ -22,12 +22,13 @@ export class RobotsTxtForm extends Component {
     this.handleClear = this.handleClear.bind(this);
 
     this.state = {
-      input_url: ''
+      input_url: '',
+      input_url_error: ''
     };
   }
 
   handleChange(event) {
-    this.setState({ input_url: event.target.value });
+    this.setState({ input_url: event.target.value, input_url_error: '' });
   }
 
   handleSubmit() {
@@ -43,16 +44,15 @@ export class RobotsTxtForm extends Component {
 
     this.props.actions.addRobotstxtToDb(url, args)
       .then((res) => {
-        // console.log('fetchRobotsTxt', res)
         if (res.data.success === 0) {
-          console.log(res.data.message);
+          this.setState({ input_url_error: res.data.message });
         }
       })
-      .catch(err => console.log('fetchRobotsTxtERROR', err));
+      .catch(err => this.setState({ input_url_error: err.errorText }));
   }
 
   handleClear() {
-    this.setState({ input_url: '' });
+    this.setState({ input_url: '', input_url_error: '' });
     this.textField.current.focus();
   }
 
@@ -77,6 +77,7 @@ export class RobotsTxtForm extends Component {
               // underlineShow={true}
               onChange={this.handleChange}
               value={this.state.input_url}
+              errorText={this.state.input_url_error}
             />
             <CardActions>
               <FlatButton label="Submit" onClick={this.handleSubmit} />
