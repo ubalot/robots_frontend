@@ -17,7 +17,8 @@ export function reducer(state, action) {
     case HOME_CLEAR_ROBOTSTXT:
       return {
         ...state,
-        readRobotsTxtContent: ''
+        readRobotsTxtContent: '',
+        readRobotsTxtUrl: ''
       };
 
     default:

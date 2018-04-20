@@ -8,7 +8,7 @@ import {
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function fetchRobotstxt(url = '') {
+export function fetchRobotstxt(endpoint = '', url = '') {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
       type: HOME_FETCH_ROBOTSTXT_BEGIN,
@@ -24,12 +24,15 @@ export function fetchRobotstxt(url = '') {
       // args.error here is only for test coverage purpose.
       /* const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
       doRequest.then( */
-      axios.get(url).then(
+      axios.get(endpoint).then(
         (res) => {
           // console.log('RES', res)
           dispatch({
             type: HOME_FETCH_ROBOTSTXT_SUCCESS,
-            data: res.data.data,
+            data: {
+              url,
+              data: res.data.data,
+            }
           });
           resolve(res);
         },
@@ -72,7 +75,8 @@ export function reducer(state, action) {
         ...state,
         fetchRobotstxtPending: false,
         fetchRobotstxtError: null,
-        readRobotsTxtContent: action.data
+        readRobotsTxtContent: action.data.data,
+        readRobotsTxtUrl: action.data.url
       };
 
     case HOME_FETCH_ROBOTSTXT_FAILURE:

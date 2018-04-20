@@ -11,6 +11,7 @@ const initialState = {
   fetchRedditReactjsListError: null,
   fetchRedditReactjsListPending: false,
   readRobotsTxtContent: '',
+  readRobotsTxtUrl: '',
   fetchRobotstxtPending: false,
   fetchRobotstxtError: null,
   addRobotstxtToDbPending: false,
