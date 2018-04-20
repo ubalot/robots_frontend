@@ -28,11 +28,11 @@ export default class Header extends Component {
   }
 
   handleClose() {
-    this.setState({ open: false })
+    this.setState({ open: false });
   }
 
   handleAddRobotsTxt() {
-    this.setState({ open: false })
+    this.setState({ open: false });
   }
 
   handleReadRobotsTxt() {
@@ -46,23 +46,25 @@ export default class Header extends Component {
           if (item.autoIndexRoute || item.name === 'Page not found') {
             return prev;
           }
-          let path;
-          if (/^\//.test(item.path)) {
-            path = item.path;
-          } else if (basePath === '/') {
-            path = `/${item.path}`;
-          } else {
-            path = `${basePath}/${item.path}`;
-          }
-          prev.push(<div key={path}><Link to={path}><MenuItem>{item.name || item.path}</MenuItem></Link></div>);
+
+          const path = (() => {
+            if (/^\//.test(item.path)) {
+              return item.path;
+            } else if (basePath === '/') {
+              return `/${item.path}`;
+            }
+            return `${basePath}/${item.path}`;
+          })();
+
+          prev.push(<div key={path}><Link href={path} to={path}><MenuItem>{item.name || item.path}</MenuItem></Link></div>);
 
           if (item.childRoutes && item.childRoutes.length) {
-            prev.push(<div key={`${path}_wrapper`}>{this.renderLinks(item.childRoutes, path)}</div>)
+            prev.push(<div key={`${path}_wrapper`}>{this.renderLinks(item.childRoutes, path)}</div>);
           }
           return prev;
         }, [])}
       </div>
-    )
+    );
   }
 
   render() {
@@ -77,7 +79,7 @@ export default class Header extends Component {
             open={this.state.open}
             onRequestChange={(open) => { this.setState({ open }); }}
           >
-          {this.renderLinks(this.props.routes[0].childRoutes, '')}
+            {this.renderLinks(this.props.routes[0].childRoutes, '')}
           </Drawer>
         </AppBar>
       </div>
