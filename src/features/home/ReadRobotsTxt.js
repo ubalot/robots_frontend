@@ -2,21 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Paper, TextField, Card, CardTitle, CardActions, FlatButton, CardText } from 'material-ui';
+import {
+  CardContent,
+  Typography,
+  Button,
+  TextField,
+  Card,
+  CardActions,
+} from 'material-ui';
 
 import * as actions from './redux/actions';
 
 
 export class ReadRobotsTxt extends Component {
   static propTypes = {
-    // children: PropTypes.node,
     common: PropTypes.object.isRequired,
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
-  };
-
-  static defaultProps = {
-    // children:
   };
 
   constructor(props) {
@@ -26,96 +28,103 @@ export class ReadRobotsTxt extends Component {
     this.submitButton = React.createRef();
 
     this.state = {
-      input_url: '', // store text form value
-      input_url_error: '', // store text form error
+      inputUrl: '', // store text form value
+      inputUrlError: '', // store text form error
     };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.resetForm = this.resetForm.bind(this);
-    this.clearContent = this.clearContent.bind(this);
   }
 
-  componentDidMount() {
-    /* Auto-focus on TextField when component is ready
-     * (it doesn't work when dev tools are open)
-    */
-    if (!this.props.home.readRobotsTxtContent) {
-      this.textField.current.focus();
-    }
+  handleChange = (event) => {
+    this.setState({
+      inputUrl: event.target.value,
+      inputUrlError: ''
+    });
   }
 
-  componentDidUpdate() {
-    /* Auto-focus on TextField when robots.txt content
-     * has been removed.
-     */
-    this.componentDidMount();
-  }
-
-  handleSubmit() {
+  handleSubmit = () => {
     const { backendServer } = this.props.common;
 
-    const arg = `url=${this.state.input_url}`;
+    const arg = `url=${this.state.inputUrl}`;
     const path = 'content';
     const robotsTxtUrl = `${backendServer}/${path}?${arg}`;
 
-    this.props.actions.fetchRobotstxt(robotsTxtUrl, this.state.input_url)
+    this.props.actions.fetchRobotstxt(robotsTxtUrl, this.state.inputUrl)
       .then((res) => {
         if (res.data.success === 0) {
-          this.setState({ input_url_error: res.data.message });
+          this.setState({ inputUrlError: res.data.message });
         }
       })
       .catch(err => console.log('fetchRobotsTxtERROR', err));
   }
 
-  resetForm() {
-    this.setState({ input_url: '', input_url_error: '' });
-    this.textField.current.setState({ value: '' });
-    this.textField.current.focus();
+  resetForm = () => {
+    this.setState({
+      inputUrl: '',
+      inputUrlError: '' }
+    );
+    // this.textField.setState({ value: '' });
+    this.textField.focus();
   }
 
-  clearContent() {
-    this.setState({ input_url: '' });
+  clearContent = () => {
+    this.setState({
+      inputUrl: '',
+      inputUrlError: ''
+    });
     this.props.actions.clearRobotstxt();
   }
 
   renderForm() {
     return (
       <div className="read-robotstxt-form">
-        <TextField
-          ref={this.textField}
-          className="give-me-some-space"
-          hintText="insert robots.txt URL here"
-          value={this.state.input_url}
-          errorText={this.state.input_url_error}
-          onChange={event => this.setState({ input_url: event.target.value })}
-          // onKeyPress={(event) => {
-          //   console.log(`Pressed keyCode ${event.key}`);
-          //   if (event.key === 'Enter') {
-          //     console.log(this.submitButton);
-          //     console.log(this.submitButton.current);
-          //     this.submitButton.current.focus();
-          //   }
-          // }}
-        />
-        <CardActions>
-          <FlatButton
-            ref={this.submitButton}
-            label="Submit"
-            className="give-me-some-space"
-            onClick={this.handleSubmit}
-          />
-          <FlatButton
-            label="Cancel"
-            className="read-robotstxt-buttons"
-            onClick={this.resetForm}
-          />
-        </CardActions>
+        <Card className="card" raised>
+          <CardContent>
+            <Typography variant="headline" component="h3">
+              Inspect the content of a robots.txt URL here.
+            </Typography>
+            <TextField
+              inputRef={(node) => { this.textField = node; }}
+              autoFocus
+              required
+              margin="normal"
+              name="input_url"
+              placeholder="insert robots.txt URL here"
+              onChange={this.handleChange}
+              value={this.state.inputUrl}
+              helperText={this.state.inputUrlError}
+              onKeyPress={(event) => {
+                if (event.key === 'Enter') {
+                  document.getElementById('submit-button').click();
+                }
+              }}
+            />
+          </CardContent>
+          <CardActions>
+            <Button
+              id="submit-button"
+              inputRef={(node) => { this.submitButton = node; }}
+              variant="raised"
+              color="primary"
+              type="submit"
+              onClick={this.handleSubmit}
+            >
+              Submit
+            </Button>
+            <Button
+              variant="raised"
+              size="small"
+              color="secondary"
+              onClick={this.resetForm}
+            >
+              Cancel
+            </Button>
+          </CardActions>
+        </Card>
       </div>
     );
   }
 
   renderContent() {
-    function renderRobotsTxtContent(robotsTxt) {
+    const renderRobotsTxtContent = (robotsTxt) => {
       const lines = robotsTxt.split('\n');
 
       const renderedContent = lines.map((line, i) => {
@@ -124,26 +133,26 @@ export class ReadRobotsTxt extends Component {
           return (
             <div key={key}>
               {i !== 0 && <br />}
-              <h5 className="user-agent">{line}</h5>
+              <Typography variant="body2" className="user-agent">{line}</Typography>
             </div>
           );
         } else if (/^allow/i.test(line)) { // Allow rule
           return (
             <div key={key}>
-              <p className="allow">{line}</p>
+              <Typography variant="body1" className="allow">{line}</Typography>
             </div>
           );
         } else if (/^disallow/i.test(line)) { // Disallow rule
           return (
             <div key={key}>
-              <p className="disallow">{line}</p>
+              <Typography variant="body1" className="disallow">{line}</Typography>
             </div>
           );
         } else if (/^sitemap/i.test(line)) { // Sitemap
           return (
             <div key={key}>
               {/^sitemap/i.test(lines[i - 1]) || <br />}
-              <p className="sitemap">{line}</p>
+              <Typography variant="body2" className="sitemap">{line}</Typography>
             </div>
           );
         } else if (/^#/i.test(line)) { // Comment
@@ -161,16 +170,26 @@ export class ReadRobotsTxt extends Component {
       });
 
       return (<div>{renderedContent}</div>);
-    }
+    };
 
     return (
       <div>
-        <CardText>
-          {renderRobotsTxtContent(this.props.home.readRobotsTxtContent)}
-        </CardText>
-        <CardActions>
-          <FlatButton label="clear" onClick={this.clearContent} />
-        </CardActions>
+        <Card>
+          <CardContent>
+            {renderRobotsTxtContent(this.props.home.readRobotsTxtContent)}
+          </CardContent>
+          <CardActions>
+            <Button
+              size="small"
+              variant="raised"
+              color="primary"
+              label="clear"
+              onClick={this.clearContent}
+            >
+              Clear
+            </Button>
+          </CardActions>
+        </Card>
       </div>
     );
   }
@@ -178,15 +197,7 @@ export class ReadRobotsTxt extends Component {
   render() {
     return (
       <div className="home-read-robots-txt">
-        <Paper>
-          <Card>
-            <CardTitle
-              title="Get robots.txt content"
-              subtitle={this.props.home.readRobotsTxtUrl}
-            />
-            {this.props.home.readRobotsTxtContent ? this.renderContent() : this.renderForm()}
-          </Card>
-        </Paper>
+        {this.props.home.readRobotsTxtContent ? this.renderContent() : this.renderForm()}
       </div>
     );
   }

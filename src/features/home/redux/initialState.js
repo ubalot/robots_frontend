@@ -6,10 +6,6 @@
 
 // NOTE: initialState constant is necessary so that Rekit could auto add initial state when creating async actions.
 const initialState = {
-  count: 0,
-  redditReactjsList: [],
-  fetchRedditReactjsListError: null,
-  fetchRedditReactjsListPending: false,
   readRobotsTxtContent: '',
   readRobotsTxtUrl: '',
   fetchRobotstxtPending: false,

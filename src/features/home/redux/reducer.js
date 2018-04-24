@@ -8,19 +8,11 @@
 
 
 import initialState from './initialState';
-import { reducer as counterPlusOneReducer } from './counterPlusOne';
-import { reducer as counterMinusOneReducer } from './counterMinusOne';
-import { reducer as resetCounterReducer } from './resetCounter';
-import { reducer as fetchRedditReactjsListReducer } from './fetchRedditReactjsList';
 import { reducer as fetchRobotstxtReducer } from './fetchRobotstxt';
 import { reducer as clearRobotstxtReducer } from './clearRobotstxt';
 import { reducer as addRobotstxtToDbReducer } from './addRobotstxtToDb';
 
 const reducers = [
-  counterPlusOneReducer,
-  counterMinusOneReducer,
-  resetCounterReducer,
-  fetchRedditReactjsListReducer,
   fetchRobotstxtReducer,
   clearRobotstxtReducer,
   addRobotstxtToDbReducer,

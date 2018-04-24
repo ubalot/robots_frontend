@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Paper, TextField, Card, CardTitle, CardActions, FlatButton } from 'material-ui';
+import {
+  TextField,
+  Card,
+  Typography,
+  CardContent,
+  CardActions,
+  Button,
+} from 'material-ui';
 import * as actions from './redux/actions';
 
 export class RobotsTxtForm extends Component {
   static propTypes = {
     common: PropTypes.object.isRequired,
-    // home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
@@ -17,104 +23,88 @@ export class RobotsTxtForm extends Component {
 
     this.textField = new React.createRef();
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClear = this.handleClear.bind(this);
-
     this.state = {
-      input_url: '',
-      input_url_error: ''
+      inputUrl: '',
+      inputUrlError: ''
     };
   }
 
-  componentDidMount() {
-    this.textField.current.focus();
+  handleChange = (event) => {
+    this.setState({
+      inputUrl: event.target.value,
+      inputUrlError: ''
+    });
   }
 
-  handleChange(event) {
-    this.setState({ input_url: event.target.value, input_url_error: '' });
-  }
-
-  handleSubmit() {
-    // alert(this.state.input_url);
-    // event.preventDefault();
+  handleSubmit = () => {
     const { backendServer } = this.props.common;
 
-    // const arg = `url=${this.textField.current.input.value}`
-    const args = { url: this.state.input_url };
-    console.log('SUBMIT ARGS', args);
+    const args = { url: this.state.inputUrl };
     const path = 'scraper/website';
     const url = `${backendServer}/${path}`;
 
     this.props.actions.addRobotstxtToDb(url, args)
       .then((res) => {
         if (res.data.success === 0) {
-          this.setState({ input_url_error: res.data.message });
+          this.setState({ inputUrlError: res.data.message });
         }
       })
-      .catch(err => this.setState({ input_url_error: err.errorText }));
+      .catch(err => this.setState({ inputUrlError: err.errorText }));
   }
 
-  handleClear() {
-    this.setState({ input_url: '', input_url_error: '' });
-    this.textField.current.focus();
+  handleClear = () => {
+    this.setState({
+      inputUrl: '',
+      inputUrlError: ''
+    });
+    this.textField.focus();
   }
 
   render() {
     return (
       <div className="home-robots-txt-form">
-        <Paper>
-          <Card>
-            {/* <CardTitle
-              title="Fill in, then press Submit"
-              subtitle="All fields are necessary."
-            /> */}
-            <CardTitle
-              title="Add robots.txt url to database."
-              subtitle=""
-            />
+        <Card className="card" raised>
+          <CardContent>
+            <Typography variant="headline" component="h3">
+              Add a robots.txt url to database.
+            </Typography>
             <TextField
-              ref={this.textField}
-              className="give-me-some-space"
-              hintText="Domain"
-              name="domain"
-              // underlineShow={true}
+              inputRef={(node) => { this.textField = node; }}
+              autoFocus
+              required
+              margin="normal"
+              name="input_url"
+              placeholder="robots.txt url"
               onChange={this.handleChange}
-              value={this.state.input_url}
-              errorText={this.state.input_url_error}
+              value={this.state.inputUrl}
+              helperText={this.state.inputUrlError}
+              onKeyPress={(event) => {
+                if (event.key === 'Enter') {
+                  document.getElementById('submit-button').click();
+                }
+              }}
             />
-            <CardActions>
-              <FlatButton label="Submit" onClick={this.handleSubmit} />
-              <FlatButton label="Clear" onClick={this.handleClear} />
-            </CardActions>
-            {/* <form onSubmit={this.handleSubmit}> */}
-            {/* <form>
-              <TextField
-                className="give-me-some-space"
-                hintText="Domain"
-                name="domain"
-                underlineShow={true}
-                onChange={this.handleChange}
-              /><br />
-              <TextField
-                className="give-me-some-space"
-                hintText="Website url"
-                name="websiteUrl"
-                underlineShow={true}
-              /><br />
-              <TextField
-                className="give-me-some-space"
-                hintText="RobotsTxt url"
-                name="RobotsTxtUrl"
-                underlineShow={true}
-              />
-              <CardActions>
-                <FlatButton label="Submit" onClick={this.handleSubmit} />
-                <FlatButton label="Clear" onClick={this.handleClear} />
-              </CardActions>
-            </form> */}
-          </Card>
-        </Paper>
+          </CardContent>
+          <CardActions>
+            <Button
+              id="submit-button"
+              variant="raised"
+              color="primary"
+              type="submit"
+              onClick={this.handleSubmit}
+            >
+              Submit
+            </Button>
+            <Button
+              variant="raised"
+              size="small"
+              color="secondary"
+              onClick={this.handleClear}
+            >
+              Cancel
+            </Button>
+          </CardActions>
+        </Card>
       </div>
     );
   }

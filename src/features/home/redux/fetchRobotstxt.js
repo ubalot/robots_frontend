@@ -25,6 +25,8 @@ export function fetchRobotstxt(endpoint = '', url = '') {
       /* const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
       doRequest.then( */
       axios.get(endpoint).then(
+      // console.log('URL', url)
+      // axios.get(url).then(
         (res) => {
           // console.log('RES', res)
           dispatch({
