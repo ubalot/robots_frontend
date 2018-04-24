@@ -90,7 +90,8 @@ const styles = theme => ({
 class App extends Component {
   static propTypes = {
     children: PropTypes.node,
-    common: PropTypes.object.isRequired,
+    // common: PropTypes.object.isRequired,
+    home: PropTypes.object.isRequired,
     routes: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
@@ -124,7 +125,7 @@ class App extends Component {
             }
             return `${basePath}/${item.path}`;
           })();
-          // console.log(path)
+
           prev.push(<div key={path}><Link href={path} to={path}><MenuItem>{item.name || item.path}</MenuItem></Link></div>);
 
           if (item.childRoutes && item.childRoutes.length) {
@@ -154,7 +155,7 @@ class App extends Component {
                   <MenuIcon />
                 </IconButton>
                 <Typography variant="title" color="inherit" noWrap>
-                  {this.props.common.appPage}
+                  {this.props.home.pageTitle}
                 </Typography>
               </Toolbar>
             </AppBar>
@@ -204,6 +205,7 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     common: state.common,
+    home: state.home,
     routes: routeConfig
   };
 }

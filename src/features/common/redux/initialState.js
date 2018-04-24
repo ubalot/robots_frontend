@@ -8,7 +8,6 @@
 
 const initialState = {
   backendServer: 'http://127.0.0.1:8000',
-  appPage: 'Home',
 };
 
 export default initialState;

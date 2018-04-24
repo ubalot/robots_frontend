@@ -3,3 +3,4 @@
 export { fetchRobotstxt, dismissFetchRobotstxtError } from './fetchRobotstxt';
 export { clearRobotstxt } from './clearRobotstxt';
 export { addRobotstxtToDb, dismissAddRobotstxtToDbError } from './addRobotstxtToDb';
+export { changePageTitle } from './changePageTitle';

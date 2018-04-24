@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as actions from './redux/actions';
 
 export class DefaultPage extends Component {
   static propTypes = {
+    pageTitle: PropTypes.string,
     // home: PropTypes.object.isRequired,
-    // actions: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
   };
+
+  static defaultProps = {
+    pageTitle: 'Default Page',
+  }
+
+  componentDidMount() {
+    this.props.actions.changePageTitle(this.props.pageTitle);
+  }
 
   render() {
     return (
@@ -28,7 +38,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({}, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch)
   };
 }
 

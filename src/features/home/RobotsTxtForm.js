@@ -14,9 +14,14 @@ import * as actions from './redux/actions';
 
 export class RobotsTxtForm extends Component {
   static propTypes = {
+    pageTitle: PropTypes.string,
     common: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
+
+  static defaultProps = {
+    pageTitle: 'Add robots.txt to database',
+  }
 
   constructor(props) {
     super(props);
@@ -27,6 +32,10 @@ export class RobotsTxtForm extends Component {
       inputUrl: '',
       inputUrlError: ''
     };
+  }
+
+  componentDidMount() {
+    this.props.actions.changePageTitle(this.props.pageTitle);
   }
 
   handleChange = (event) => {

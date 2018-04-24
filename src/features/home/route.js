@@ -8,6 +8,28 @@ import {
   RobotsTxtForm,
 } from './';
 
+// export default {
+//   path: '/',
+//   name: 'Home',
+//   childRoutes: [
+//     { path: 'default-page',
+//       name: 'Default page',
+//       component: DefaultPage,
+//       isIndex: true,
+//     },
+//     // { path: 'test-page', name: 'Test page', component: TestPage },
+//     { path: 'read-robots-txt',
+//       name: 'Quick view robots.txt',
+//       component: ReadRobotsTxt,
+//       // isIndex: true
+//     },
+//     { path: 'robotstxt-form',
+//       name: 'Add robots.txt to db',
+//       component: RobotsTxtForm
+//     },
+//   ],
+// };
+
 export default {
   path: '/',
   name: 'Home',

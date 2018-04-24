@@ -16,10 +16,15 @@ import * as actions from './redux/actions';
 
 export class ReadRobotsTxt extends Component {
   static propTypes = {
+    pageTitle: PropTypes.string,
     common: PropTypes.object.isRequired,
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
+
+  static defaultProps = {
+    pageTitle: 'Read robots.txt',
+  }
 
   constructor(props) {
     super(props);
@@ -31,6 +36,10 @@ export class ReadRobotsTxt extends Component {
       inputUrl: '', // store text form value
       inputUrlError: '', // store text form error
     };
+  }
+
+  componentDidMount() {
+    this.props.actions.changePageTitle(this.props.pageTitle);
   }
 
   handleChange = (event) => {

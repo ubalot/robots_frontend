@@ -11,11 +11,13 @@ import initialState from './initialState';
 import { reducer as fetchRobotstxtReducer } from './fetchRobotstxt';
 import { reducer as clearRobotstxtReducer } from './clearRobotstxt';
 import { reducer as addRobotstxtToDbReducer } from './addRobotstxtToDb';
+import { reducer as changePageTitleReducer } from './changePageTitle';
 
 const reducers = [
   fetchRobotstxtReducer,
   clearRobotstxtReducer,
   addRobotstxtToDbReducer,
+  changePageTitleReducer,
 ];
 
 export default function reducer(state = initialState, action) {
