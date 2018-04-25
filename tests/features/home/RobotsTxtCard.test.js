@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { RobotTxtCard } from 'src/features/home';
+import { RobotsTxtCard } from 'src/features/home';
 
-describe('home/RobotTxtCard', () => {
+describe('home/RobotsTxtCard', () => {
   it('renders node with correct class name', () => {
     const renderedComponent = shallow(
-      <RobotTxtCard />
+      <RobotsTxtCard />
     );
 
     expect(
-      renderedComponent.find('.home-robot-txt-card').getElement()
+      renderedComponent.find('.home-robots-txt-card').getElement()
     ).to.exist;
   });
 });

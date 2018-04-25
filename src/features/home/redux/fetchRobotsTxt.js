@@ -1,17 +1,17 @@
 import axios from 'axios';
 import {
-  HOME_FETCH_ROBOTTXT_BEGIN,
-  HOME_FETCH_ROBOTTXT_SUCCESS,
-  HOME_FETCH_ROBOTTXT_FAILURE,
-  HOME_FETCH_ROBOTTXT_DISMISS_ERROR,
+  HOME_FETCH_ROBOTS_TXT_BEGIN,
+  HOME_FETCH_ROBOTS_TXT_SUCCESS,
+  HOME_FETCH_ROBOTS_TXT_FAILURE,
+  HOME_FETCH_ROBOTS_TXT_DISMISS_ERROR,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function fetchRobottxt(endpoint = '', url = '') {
+export function fetchRobotsTxt(server = '', robotsTxtUrl = '') {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: HOME_FETCH_ROBOTTXT_BEGIN,
+      type: HOME_FETCH_ROBOTS_TXT_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -24,15 +24,15 @@ export function fetchRobottxt(endpoint = '', url = '') {
       // args.error here is only for test coverage purpose.
       /* const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
       doRequest.then( */
-      axios.get(endpoint).then(
+      axios.get(`${server}/content?url=${robotsTxtUrl}`).then(
       // console.log('URL', url)
       // axios.get(url).then(
         (res) => {
           // console.log('RES', res)
           dispatch({
-            type: HOME_FETCH_ROBOTTXT_SUCCESS,
+            type: HOME_FETCH_ROBOTS_TXT_SUCCESS,
             data: {
-              url,
+              url: robotsTxtUrl,
               data: res.data.data,
             }
           });
@@ -41,7 +41,7 @@ export function fetchRobottxt(endpoint = '', url = '') {
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
-            type: HOME_FETCH_ROBOTTXT_FAILURE,
+            type: HOME_FETCH_ROBOTS_TXT_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -55,45 +55,45 @@ export function fetchRobottxt(endpoint = '', url = '') {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissFetchRobottxtError() {
+export function dismissFetchRobotsTxtError() {
   return {
-    type: HOME_FETCH_ROBOTTXT_DISMISS_ERROR,
+    type: HOME_FETCH_ROBOTS_TXT_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case HOME_FETCH_ROBOTTXT_BEGIN:
+    case HOME_FETCH_ROBOTS_TXT_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        fetchRobottxtPending: true,
-        fetchRobottxtError: null,
+        fetchRobotsTxtPending: true,
+        fetchRobotsTxtError: null,
       };
 
-    case HOME_FETCH_ROBOTTXT_SUCCESS:
+    case HOME_FETCH_ROBOTS_TXT_SUCCESS:
       // The request is success
       return {
         ...state,
-        fetchRobottxtPending: false,
-        fetchRobottxtError: null,
+        fetchRobotsTxtPending: false,
+        fetchRobotsTxtError: null,
         readRobotsTxtContent: action.data.data,
         readRobotsTxtUrl: action.data.url
       };
 
-    case HOME_FETCH_ROBOTTXT_FAILURE:
+    case HOME_FETCH_ROBOTS_TXT_FAILURE:
       // The request is failed
       return {
         ...state,
-        fetchRobottxtPending: false,
-        fetchRobottxtError: action.data.error,
+        fetchRobotsTxtPending: false,
+        fetchRobotsTxtError: action.data.error,
       };
 
-    case HOME_FETCH_ROBOTTXT_DISMISS_ERROR:
+    case HOME_FETCH_ROBOTS_TXT_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        fetchRobottxtError: null,
+        fetchRobotsTxtError: null,
       };
 
     default:

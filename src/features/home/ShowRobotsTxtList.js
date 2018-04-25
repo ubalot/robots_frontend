@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { RobotTxtCard } from '.';
+import { RobotsTxtCard } from '.';
 
-export class ShowRobotTxts extends Component {
+export class ShowRobotsTxtList extends Component {
   static propTypes = {
     pageTitle: PropTypes.string,
     common: PropTypes.object.isRequired,
@@ -20,15 +20,14 @@ export class ShowRobotTxts extends Component {
   componentDidMount() {
     this.props.actions.changePageTitle(this.props.pageTitle);
 
-    const endpoint = `${this.props.common.backendServer}/scraper/websites_list`;
-    this.props.actions.fetchRobottxtsList(endpoint);
+    const { backendServer } = this.props.common;
+    this.props.actions.fetchRobotsTxtList(backendServer);
   }
 
   render() {
     return (
-      <div className="home-show-robot-txts">
-        {/* {this.props.home.robottxtsList.map(website => this.renderCard(website))} */}
-        {this.props.home.robottxtsList.map(website => <RobotTxtCard website={website} />)}
+      <div className="home-show-robots-txt-list">
+        {this.props.home.robotsTxtList.map(website => <RobotsTxtCard website={website} />)}
       </div>
     );
   }
@@ -52,4 +51,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ShowRobotTxts);
+)(ShowRobotsTxtList);

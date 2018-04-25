@@ -9,15 +9,15 @@ const initialState = {
   pageTitle: 'Home',
   readRobotsTxtContent: '',
   readRobotsTxtUrl: '',
-  fetchRobottxtPending: false,
-  fetchRobottxtError: null,
+  fetchRobotsTxtPending: false,
+  fetchRobotsTxtError: null,
   addRobottxtToDbPending: false,
   addRobottxtToDbError: null,
-  fetchRobottxtsListPending: false,
-  fetchRobottxtsListError: null,
-  robottxtsList: [],
-  deleteRobotTxtPending: false,
-  deleteRobotTxtError: null,
+  fetchRobotsTxtListPending: false,
+  fetchRobotsTxtListError: null,
+  robotsTxtList: [],
+  deleteRobotsTxtPending: false,
+  deleteRobotsTxtError: null,
 };
 
 export default initialState;

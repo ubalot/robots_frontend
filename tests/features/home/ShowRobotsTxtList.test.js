@@ -1,20 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { ShowRobotTxts } from 'src/features/home/ShowRobotTxts';
+import { ShowRobotsTxtList } from 'src/features/home/ShowRobotsTxtList';
 
-describe('home/ShowRobotTxts', () => {
+describe('home/ShowRobotsTxtList', () => {
   it('renders node with correct class name', () => {
     const props = {
       home: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <ShowRobotTxts {...props} />
+      <ShowRobotsTxtList {...props} />
     );
 
     expect(
-      renderedComponent.find('.home-show-robot-txts').getElement()
+      renderedComponent.find('.home-show-robots-txt-list').getElement()
     ).to.exist;
   });
 });

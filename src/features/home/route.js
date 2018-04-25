@@ -5,30 +5,8 @@ import {
   DefaultPage,
   ReadRobotsTxt,
   RobotsTxtForm,
-  ShowRobotTxts,
+  ShowRobotsTxtList,
 } from './';
-
-// export default {
-//   path: '/',
-//   name: 'Home',
-//   childRoutes: [
-//     { path: 'default-page',
-//       name: 'Default page',
-//       component: DefaultPage,
-//       isIndex: true,
-//     },
-//     // { path: 'test-page', name: 'Test page', component: TestPage },
-//     { path: 'read-robots-txt',
-//       name: 'Quick view robots.txt',
-//       component: ReadRobotsTxt,
-//       // isIndex: true
-//     },
-//     { path: 'robotstxt-form',
-//       name: 'Add robots.txt to db',
-//       component: RobotsTxtForm
-//     },
-//   ],
-// };
 
 export default {
   path: '/',
@@ -49,6 +27,6 @@ export default {
       name: 'Add robots.txt to db',
       component: RobotsTxtForm
     },
-    { path: 'robottxts', name: 'Show robot txts', component: ShowRobotTxts },
+    { path: 'robottxts', name: 'Show robots txt list', component: ShowRobotsTxtList },
   ],
 };

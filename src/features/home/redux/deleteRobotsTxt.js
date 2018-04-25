@@ -1,17 +1,17 @@
 import axios from 'axios';
 import {
-  HOME_DELETE_ROBOT_TXT_BEGIN,
-  HOME_DELETE_ROBOT_TXT_SUCCESS,
-  HOME_DELETE_ROBOT_TXT_FAILURE,
-  HOME_DELETE_ROBOT_TXT_DISMISS_ERROR,
+  HOME_DELETE_ROBOTS_TXT_BEGIN,
+  HOME_DELETE_ROBOTS_TXT_SUCCESS,
+  HOME_DELETE_ROBOTS_TXT_FAILURE,
+  HOME_DELETE_ROBOTS_TXT_DISMISS_ERROR,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function deleteRobotTxt(endpoint = '') {
+export function deleteRobotsTxt(server = '', id = '') {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: HOME_DELETE_ROBOT_TXT_BEGIN,
+      type: HOME_DELETE_ROBOTS_TXT_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -24,18 +24,20 @@ export function deleteRobotTxt(endpoint = '') {
       // args.error here is only for test coverage purpose.
       // const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
       // doRequest.then(
-      axios.delete(endpoint).then(
+      axios.delete(`${server}/scraper/website/${id}`).then(
         (res) => {
           dispatch({
-            type: HOME_DELETE_ROBOT_TXT_SUCCESS,
-            data: parseInt(res.data.data.id, 10),
+            type: HOME_DELETE_ROBOTS_TXT_SUCCESS,
+            data: {
+              id: parseInt(res.data.data.id, 10)
+            },
           });
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
-            type: HOME_DELETE_ROBOT_TXT_FAILURE,
+            type: HOME_DELETE_ROBOTS_TXT_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -49,44 +51,43 @@ export function deleteRobotTxt(endpoint = '') {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissDeleteRobotTxtError() {
+export function dismissDeleteRobotsTxtError() {
   return {
-    type: HOME_DELETE_ROBOT_TXT_DISMISS_ERROR,
+    type: HOME_DELETE_ROBOTS_TXT_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case HOME_DELETE_ROBOT_TXT_BEGIN:
+    case HOME_DELETE_ROBOTS_TXT_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        deleteRobotTxtPending: true,
-        deleteRobotTxtError: null,
+        deleteRobotsTxtPending: true,
+        deleteRobotsTxtError: null,
       };
 
-    case HOME_DELETE_ROBOT_TXT_SUCCESS:
-      // The request is success
+    case HOME_DELETE_ROBOTS_TXT_SUCCESS:
       return {
         ...state,
-        deleteRobotTxtPending: false,
-        deleteRobotTxtError: null,
-        robottxtsList: state.robottxtsList.filter(w => w.id !== action.data)
+        deleteRobotsTxtPending: false,
+        deleteRobotsTxtError: null,
+        robotsTxtList: state.robotsTxtList.filter(w => w.id !== action.data.id)
       };
 
-    case HOME_DELETE_ROBOT_TXT_FAILURE:
+    case HOME_DELETE_ROBOTS_TXT_FAILURE:
       // The request is failed
       return {
         ...state,
-        deleteRobotTxtPending: false,
-        deleteRobotTxtError: action.data.error,
+        deleteRobotsTxtPending: false,
+        deleteRobotsTxtError: action.data.error,
       };
 
-    case HOME_DELETE_ROBOT_TXT_DISMISS_ERROR:
+    case HOME_DELETE_ROBOTS_TXT_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        deleteRobotTxtError: null,
+        deleteRobotsTxtError: null,
       };
 
     default:

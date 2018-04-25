@@ -8,20 +8,20 @@
 
 
 import initialState from './initialState';
-import { reducer as fetchRobottxtReducer } from './fetchRobottxt';
-import { reducer as clearRobottxtReducer } from './clearRobottxt';
+import { reducer as fetchRobotsTxtReducer } from './fetchRobotsTxt';
+import { reducer as clearRobotsTxtReducer } from './clearRobotsTxt';
 import { reducer as addRobottxtToDbReducer } from './addRobottxtToDb';
 import { reducer as changePageTitleReducer } from './changePageTitle';
-import { reducer as fetchRobottxtsListReducer } from './fetchRobottxtsList';
-import { reducer as deleteRobotTxtReducer } from './deleteRobotTxt';
+import { reducer as fetchRobotsTxtListReducer } from './fetchRobotsTxtList';
+import { reducer as deleteRobotsTxtReducer } from './deleteRobotsTxt';
 
 const reducers = [
-  fetchRobottxtReducer,
-  clearRobottxtReducer,
+  fetchRobotsTxtReducer,
+  clearRobotsTxtReducer,
   addRobottxtToDbReducer,
   changePageTitleReducer,
-  fetchRobottxtsListReducer,
-  deleteRobotTxtReducer,
+  fetchRobotsTxtListReducer,
+  deleteRobotsTxtReducer,
 ];
 
 export default function reducer(state = initialState, action) {

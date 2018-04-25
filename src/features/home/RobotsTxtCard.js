@@ -37,7 +37,7 @@ const styles = theme => ({
   },
 });
 
-class RobotTxtCard extends Component {
+class RobotsTxtCard extends Component {
   static propTypes = {
     website: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
@@ -55,10 +55,10 @@ class RobotTxtCard extends Component {
     const { classes } = this.props;
 
     return (
-      <div className="home-robot-txt-card">
+      <div className="home-robots-txt-card">
         <Card className={classes.card}>
           <CardHeader
-            title={this.props.website.robot_url}
+            title={this.props.website.robots_txt_url}
           />
           <CardActions className={classes.actions} disableActionSpacing>
             <IconButton
@@ -84,14 +84,15 @@ class RobotTxtCard extends Component {
                 website_url: {this.props.website.website_url},
               </Typography>
               <Typography paragraph>
-                robot_url: {this.props.website.robot_url}
+                robots_txt_url: {this.props.website.robots_txt_url}
               </Typography>
             </CardContent>
             <CardActions className={classes.actions}>
               <IconButton
                 onClick={() => {
-                  const endpoint = `${this.props.common.backendServer}/scraper/website/${this.props.website.id}`;
-                  this.props.actions.deleteRobotTxt(endpoint);
+                  const { id } = this.props.website;
+                  const { backendServer } = this.props.common;
+                  this.props.actions.deleteRobotsTxt(backendServer, id);
                 }}
               >
                 <DeleteIcon />
@@ -122,7 +123,7 @@ function mapDispatchToProps(dispatch) {
 export default withStyles(styles, { withTheme: true })(connect(
   mapStateToProps,
   mapDispatchToProps
-)(RobotTxtCard));
+)(RobotsTxtCard));
 
 
 // export default withStyles(styles)(RobotTxtCard);

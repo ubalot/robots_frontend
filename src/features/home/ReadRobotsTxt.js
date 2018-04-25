@@ -48,17 +48,13 @@ export class ReadRobotsTxt extends Component {
   handleSubmit = () => {
     const { backendServer } = this.props.common;
 
-    const arg = `url=${this.state.inputUrl}`;
-    const path = 'content';
-    const robotsTxtUrl = `${backendServer}/${path}?${arg}`;
-
-    this.props.actions.fetchRobottxt(robotsTxtUrl, this.state.inputUrl)
+    this.props.actions.fetchRobottxt(backendServer, this.state.inputUrl)
       .then((res) => {
         if (res.data.success === 0) {
           this.setState({ inputUrlError: res.data.message });
         }
       })
-      .catch(err => console.log('fetchRobotsTxtERROR', err));
+      .catch(err => this.setState({ inputUrlError: err }));
   }
 
   resetForm = () => {
@@ -75,7 +71,7 @@ export class ReadRobotsTxt extends Component {
       inputUrl: '',
       inputUrlError: ''
     });
-    this.props.actions.clearRobotstxt();
+    this.props.actions.clearRobotsTxt();
   }
 
   renderForm() {
