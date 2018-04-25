@@ -1,6 +1,6 @@
 // AUTO MAINTAINED FILE: DO NOT CHANGE
 
-export { fetchRobotstxt, dismissFetchRobotstxtError } from './fetchRobotstxt';
-export { clearRobotstxt } from './clearRobotstxt';
-export { addRobotstxtToDb, dismissAddRobotstxtToDbError } from './addRobotstxtToDb';
+export { fetchRobottxt, dismissFetchRobottxtError } from './fetchRobottxt';
+export { clearRobottxt } from './clearRobottxt';
+export { addRobottxtToDb, dismissAddRobottxtToDbError } from './addRobottxtToDb';
 export { changePageTitle } from './changePageTitle';

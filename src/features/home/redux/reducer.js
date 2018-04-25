@@ -8,15 +8,15 @@
 
 
 import initialState from './initialState';
-import { reducer as fetchRobotstxtReducer } from './fetchRobotstxt';
-import { reducer as clearRobotstxtReducer } from './clearRobotstxt';
-import { reducer as addRobotstxtToDbReducer } from './addRobotstxtToDb';
+import { reducer as fetchRobottxtReducer } from './fetchRobottxt';
+import { reducer as clearRobottxtReducer } from './clearRobottxt';
+import { reducer as addRobottxtToDbReducer } from './addRobottxtToDb';
 import { reducer as changePageTitleReducer } from './changePageTitle';
 
 const reducers = [
-  fetchRobotstxtReducer,
-  clearRobotstxtReducer,
-  addRobotstxtToDbReducer,
+  fetchRobottxtReducer,
+  clearRobottxtReducer,
+  addRobottxtToDbReducer,
   changePageTitleReducer,
 ];
 

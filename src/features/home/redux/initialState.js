@@ -9,10 +9,10 @@ const initialState = {
   pageTitle: 'Home',
   readRobotsTxtContent: '',
   readRobotsTxtUrl: '',
-  fetchRobotstxtPending: false,
-  fetchRobotstxtError: null,
-  addRobotstxtToDbPending: false,
-  addRobotstxtToDbError: null,
+  fetchRobottxtPending: false,
+  fetchRobottxtError: null,
+  addRobottxtToDbPending: false,
+  addRobottxtToDbError: null,
 };
 
 export default initialState;

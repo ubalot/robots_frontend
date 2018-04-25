@@ -1,18 +1,17 @@
 import axios from 'axios';
-
 import {
-  HOME_ADD_ROBOTSTXT_TO_DB_BEGIN,
-  HOME_ADD_ROBOTSTXT_TO_DB_SUCCESS,
-  HOME_ADD_ROBOTSTXT_TO_DB_FAILURE,
-  HOME_ADD_ROBOTSTXT_TO_DB_DISMISS_ERROR,
+  HOME_FETCH_ROBOTTXT_BEGIN,
+  HOME_FETCH_ROBOTTXT_SUCCESS,
+  HOME_FETCH_ROBOTTXT_FAILURE,
+  HOME_FETCH_ROBOTTXT_DISMISS_ERROR,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function addRobotstxtToDb(url = '', args = {}) {
+export function fetchRobottxt(endpoint = '', url = '') {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: HOME_ADD_ROBOTSTXT_TO_DB_BEGIN,
+      type: HOME_FETCH_ROBOTTXT_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -20,20 +19,29 @@ export function addRobotstxtToDb(url = '', args = {}) {
     // It's hard to use state to manage it, but returning a promise allows you to easily achieve it.
     // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
     const promise = new Promise((resolve, reject) => {
-      const querystring = require('querystring');
-      const data = querystring.stringify(args);
-      axios.post(url, data).then(
+      // doRequest is a placeholder Promise. You should replace it with your own logic.
+      // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
+      // args.error here is only for test coverage purpose.
+      /* const doRequest = args.error ? Promise.reject(new Error()) : Promise.resolve();
+      doRequest.then( */
+      axios.get(endpoint).then(
+      // console.log('URL', url)
+      // axios.get(url).then(
         (res) => {
+          // console.log('RES', res)
           dispatch({
-            type: HOME_ADD_ROBOTSTXT_TO_DB_SUCCESS,
-            data: res,
+            type: HOME_FETCH_ROBOTTXT_SUCCESS,
+            data: {
+              url,
+              data: res.data.data,
+            }
           });
           resolve(res);
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
-            type: HOME_ADD_ROBOTSTXT_TO_DB_FAILURE,
+            type: HOME_FETCH_ROBOTTXT_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -47,43 +55,45 @@ export function addRobotstxtToDb(url = '', args = {}) {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissAddRobotstxtToDbError() {
+export function dismissFetchRobottxtError() {
   return {
-    type: HOME_ADD_ROBOTSTXT_TO_DB_DISMISS_ERROR,
+    type: HOME_FETCH_ROBOTTXT_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case HOME_ADD_ROBOTSTXT_TO_DB_BEGIN:
+    case HOME_FETCH_ROBOTTXT_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        addRobotstxtToDbPending: true,
-        addRobotstxtToDbError: null,
+        fetchRobottxtPending: true,
+        fetchRobottxtError: null,
       };
 
-    case HOME_ADD_ROBOTSTXT_TO_DB_SUCCESS:
+    case HOME_FETCH_ROBOTTXT_SUCCESS:
       // The request is success
       return {
         ...state,
-        addRobotstxtToDbPending: false,
-        addRobotstxtToDbError: null,
+        fetchRobottxtPending: false,
+        fetchRobottxtError: null,
+        readRobotsTxtContent: action.data.data,
+        readRobotsTxtUrl: action.data.url
       };
 
-    case HOME_ADD_ROBOTSTXT_TO_DB_FAILURE:
+    case HOME_FETCH_ROBOTTXT_FAILURE:
       // The request is failed
       return {
         ...state,
-        addRobotstxtToDbPending: false,
-        addRobotstxtToDbError: action.data.error,
+        fetchRobottxtPending: false,
+        fetchRobottxtError: action.data.error,
       };
 
-    case HOME_ADD_ROBOTSTXT_TO_DB_DISMISS_ERROR:
+    case HOME_FETCH_ROBOTTXT_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        addRobotstxtToDbError: null,
+        fetchRobottxtError: null,
       };
 
     default:
