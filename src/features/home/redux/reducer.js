@@ -13,6 +13,7 @@ import { reducer as clearRobottxtReducer } from './clearRobottxt';
 import { reducer as addRobottxtToDbReducer } from './addRobottxtToDb';
 import { reducer as changePageTitleReducer } from './changePageTitle';
 import { reducer as fetchRobottxtsListReducer } from './fetchRobottxtsList';
+import { reducer as deleteRobotTxtReducer } from './deleteRobotTxt';
 
 const reducers = [
   fetchRobottxtReducer,
@@ -20,6 +21,7 @@ const reducers = [
   addRobottxtToDbReducer,
   changePageTitleReducer,
   fetchRobottxtsListReducer,
+  deleteRobotTxtReducer,
 ];
 
 export default function reducer(state = initialState, action) {

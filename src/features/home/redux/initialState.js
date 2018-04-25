@@ -16,6 +16,8 @@ const initialState = {
   fetchRobottxtsListPending: false,
   fetchRobottxtsListError: null,
   robottxtsList: [],
+  deleteRobotTxtPending: false,
+  deleteRobotTxtError: null,
 };
 
 export default initialState;

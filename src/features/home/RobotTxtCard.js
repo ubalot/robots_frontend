@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import classnames from 'classnames';
 import { Card, CardHeader, CardContent, CardActions, IconButton, Typography } from 'material-ui';
@@ -7,6 +9,7 @@ import Collapse from 'material-ui/transitions/Collapse';
 import red from 'material-ui/colors/red';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteIcon from '@material-ui/icons/Delete';
+import * as actions from './redux/actions';
 
 const styles = theme => ({
   card: {
@@ -38,6 +41,8 @@ class RobotTxtCard extends Component {
   static propTypes = {
     website: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
+    common: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
   }
 
   state = { expanded: false };
@@ -83,7 +88,12 @@ class RobotTxtCard extends Component {
               </Typography>
             </CardContent>
             <CardActions className={classes.actions}>
-              <IconButton>
+              <IconButton
+                onClick={() => {
+                  const endpoint = `${this.props.common.backendServer}/scraper/website/${this.props.website.id}`;
+                  this.props.actions.deleteRobotTxt(endpoint);
+                }}
+              >
                 <DeleteIcon />
               </IconButton>
             </CardActions>
@@ -94,4 +104,25 @@ class RobotTxtCard extends Component {
   }
 }
 
-export default withStyles(styles)(RobotTxtCard);
+/* istanbul ignore next */
+function mapStateToProps(state) {
+  return {
+    common: state.common,
+    home: state.home,
+  };
+}
+
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ ...actions }, dispatch)
+  };
+}
+
+export default withStyles(styles, { withTheme: true })(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RobotTxtCard));
+
+
+// export default withStyles(styles)(RobotTxtCard);
