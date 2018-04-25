@@ -52,7 +52,7 @@ export class RobotsTxtForm extends Component {
     const path = 'scraper/website';
     const url = `${backendServer}/${path}`;
 
-    this.props.actions.addRobotstxtToDb(url, args)
+    this.props.actions.addRobottxtToDb(url, args)
       .then((res) => {
         if (res.data.success === 0) {
           this.setState({ inputUrlError: res.data.message });

@@ -12,12 +12,14 @@ import { reducer as fetchRobottxtReducer } from './fetchRobottxt';
 import { reducer as clearRobottxtReducer } from './clearRobottxt';
 import { reducer as addRobottxtToDbReducer } from './addRobottxtToDb';
 import { reducer as changePageTitleReducer } from './changePageTitle';
+import { reducer as fetchRobottxtsListReducer } from './fetchRobottxtsList';
 
 const reducers = [
   fetchRobottxtReducer,
   clearRobottxtReducer,
   addRobottxtToDbReducer,
   changePageTitleReducer,
+  fetchRobottxtsListReducer,
 ];
 
 export default function reducer(state = initialState, action) {

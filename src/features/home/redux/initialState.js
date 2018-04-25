@@ -13,6 +13,9 @@ const initialState = {
   fetchRobottxtError: null,
   addRobottxtToDbPending: false,
   addRobottxtToDbError: null,
+  fetchRobottxtsListPending: false,
+  fetchRobottxtsListError: null,
+  robottxtsList: [],
 };
 
 export default initialState;

@@ -3,9 +3,9 @@
 
 import {
   DefaultPage,
-  // TestPage,
   ReadRobotsTxt,
   RobotsTxtForm,
+  ShowRobotTxts,
 } from './';
 
 // export default {
@@ -49,5 +49,6 @@ export default {
       name: 'Add robots.txt to db',
       component: RobotsTxtForm
     },
+    { path: 'robottxts', name: 'Show robot txts', component: ShowRobotTxts },
   ],
 };
