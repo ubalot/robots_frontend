@@ -26,21 +26,17 @@ export class ReadRobotsTxt extends Component {
     pageTitle: 'Read robots.txt',
   }
 
-  constructor(props) {
-    super(props);
-
-    this.textField = React.createRef();
-    this.submitButton = React.createRef();
-
-    this.state = {
-      inputUrl: '', // store text form value
-      inputUrlError: '', // store text form error
-    };
-  }
+  state = {
+    inputUrl: '', // store text form value
+    inputUrlError: '', // store text form error
+  };
 
   componentDidMount() {
     this.props.actions.changePageTitle(this.props.pageTitle);
   }
+
+  textField = React.createRef();
+  submitButton = React.createRef();
 
   handleChange = (event) => {
     this.setState({
@@ -56,7 +52,7 @@ export class ReadRobotsTxt extends Component {
     const path = 'content';
     const robotsTxtUrl = `${backendServer}/${path}?${arg}`;
 
-    this.props.actions.fetchRobotstxt(robotsTxtUrl, this.state.inputUrl)
+    this.props.actions.fetchRobottxt(robotsTxtUrl, this.state.inputUrl)
       .then((res) => {
         if (res.data.success === 0) {
           this.setState({ inputUrlError: res.data.message });

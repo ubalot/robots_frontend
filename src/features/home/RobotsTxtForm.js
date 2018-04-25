@@ -23,20 +23,16 @@ export class RobotsTxtForm extends Component {
     pageTitle: 'Add robots.txt to database',
   }
 
-  constructor(props) {
-    super(props);
-
-    this.textField = new React.createRef();
-
-    this.state = {
-      inputUrl: '',
-      inputUrlError: ''
-    };
-  }
+  state = {
+    inputUrl: '',
+    inputUrlError: ''
+  };
 
   componentDidMount() {
     this.props.actions.changePageTitle(this.props.pageTitle);
   }
+
+  textField = new React.createRef();
 
   handleChange = (event) => {
     this.setState({

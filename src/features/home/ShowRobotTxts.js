@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Card, CardContent, Typography } from 'material-ui';
+import { RobotTxtCard } from '.';
 
 export class ShowRobotTxts extends Component {
   static propTypes = {
@@ -24,22 +24,11 @@ export class ShowRobotTxts extends Component {
     this.props.actions.fetchRobottxtsList(endpoint);
   }
 
-  renderCard(website) {
-    return (
-      <Card>
-        <CardContent>
-          <Typography>
-            {website.robot_url}
-          </Typography>
-        </CardContent>
-      </Card>
-    );
-  }
-
   render() {
     return (
       <div className="home-show-robot-txts">
-        {this.props.home.robottxtsList.map(website => this.renderCard(website))}
+        {/* {this.props.home.robottxtsList.map(website => this.renderCard(website))} */}
+        {this.props.home.robottxtsList.map(website => <RobotTxtCard website={website} />)}
       </div>
     );
   }
