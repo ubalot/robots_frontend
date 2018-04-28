@@ -85,14 +85,13 @@ export class RobotsTxtForm extends Component {
               helperText={this.state.inputUrlError}
               onKeyPress={(event) => {
                 if (event.key === 'Enter') {
-                  document.getElementById('submit-button').click();
+                  this.handleSubmit();
                 }
               }}
             />
           </CardContent>
           <CardActions>
             <Button
-              id="submit-button"
               variant="raised"
               color="primary"
               type="submit"
@@ -102,7 +101,6 @@ export class RobotsTxtForm extends Component {
             </Button>
             <Button
               variant="raised"
-              // size="small"
               color="secondary"
               onClick={this.handleClear}
             >

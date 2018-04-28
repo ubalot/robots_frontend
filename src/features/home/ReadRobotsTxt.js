@@ -36,7 +36,6 @@ export class ReadRobotsTxt extends Component {
   }
 
   textField = React.createRef();
-  submitButton = React.createRef();
 
   handleChange = (event) => {
     this.setState({
@@ -48,7 +47,7 @@ export class ReadRobotsTxt extends Component {
   handleSubmit = () => {
     const { backendServer } = this.props.common;
 
-    this.props.actions.fetchRobottxt(backendServer, this.state.inputUrl)
+    this.props.actions.fetchRobotsTxt(backendServer, this.state.inputUrl)
       .then((res) => {
         if (res.data.success === 0) {
           this.setState({ inputUrlError: res.data.message });
@@ -62,7 +61,6 @@ export class ReadRobotsTxt extends Component {
       inputUrl: '',
       inputUrlError: '' }
     );
-    // this.textField.setState({ value: '' });
     this.textField.focus();
   }
 
@@ -94,15 +92,13 @@ export class ReadRobotsTxt extends Component {
               helperText={this.state.inputUrlError}
               onKeyPress={(event) => {
                 if (event.key === 'Enter') {
-                  document.getElementById('submit-button').click();
+                  this.handleSubmit();
                 }
               }}
             />
           </CardContent>
           <CardActions>
             <Button
-              id="submit-button"
-              inputRef={(node) => { this.submitButton = node; }}
               variant="raised"
               color="primary"
               type="submit"
@@ -112,7 +108,6 @@ export class ReadRobotsTxt extends Component {
             </Button>
             <Button
               variant="raised"
-              size="small"
               color="secondary"
               onClick={this.resetForm}
             >
@@ -181,7 +176,7 @@ export class ReadRobotsTxt extends Component {
           </CardContent>
           <CardActions>
             <Button
-              size="small"
+              // size="small"
               variant="raised"
               color="primary"
               label="clear"
