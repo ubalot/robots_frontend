@@ -5,3 +5,4 @@ export { default as ReadRobotsTxt } from './ReadRobotsTxt';
 export { default as RobotsTxtForm } from './RobotsTxtForm';
 export { default as ShowRobotsTxtList } from './ShowRobotsTxtList';
 export { default as RobotsTxtCard } from './RobotsTxtCard';
+export { default as AutoGrid } from './AutoGrid';

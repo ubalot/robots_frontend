@@ -6,7 +6,6 @@ import { withStyles } from 'material-ui/styles';
 import classnames from 'classnames';
 import { Card, CardHeader, CardContent, CardActions, IconButton, Typography } from 'material-ui';
 import Collapse from 'material-ui/transitions/Collapse';
-import red from 'material-ui/colors/red';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteIcon from '@material-ui/icons/Delete';
 import * as actions from './redux/actions';
@@ -21,6 +20,7 @@ const styles = theme => ({
   },
   actions: {
     display: 'flex',
+    flexFlow: 'row wrap'
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -31,9 +31,6 @@ const styles = theme => ({
   },
   expandOpen: {
     transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
   },
 });
 
@@ -59,6 +56,7 @@ class RobotsTxtCard extends Component {
         <Card className={classes.card}>
           <CardHeader
             title={this.props.website.robots_txt_url}
+            className="card-title-in-robots-list"
           />
           <CardActions className={classes.actions} disableActionSpacing>
             <IconButton
@@ -124,6 +122,3 @@ export default withStyles(styles, { withTheme: true })(connect(
   mapStateToProps,
   mapDispatchToProps
 )(RobotsTxtCard));
-
-
-// export default withStyles(styles)(RobotTxtCard);

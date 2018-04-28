@@ -102,7 +102,7 @@ export class RobotsTxtForm extends Component {
             </Button>
             <Button
               variant="raised"
-              size="small"
+              // size="small"
               color="secondary"
               onClick={this.handleClear}
             >

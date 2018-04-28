@@ -21,7 +21,7 @@
   "devDependencies": {
     "argparse": "^1.0.7",
     "axios": "^0.17.0",
-    "babel-core": "^6.25.0",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.0.0",
     "babel-plugin-istanbul": "^4.1.6",
@@ -49,7 +49,7 @@
     "jsdom": "^11.9.0",
     "less": "^2.7.3",
     "less-loader": "^4.1.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.10",
     "lodash-webpack-plugin": "^0.11.5",
     "mocha": "^4.1.0",
     "mocha-webpack": "^1.1.0",
@@ -67,7 +67,7 @@
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.4.0",
     "redux-thunk": "^2.2.0",
-    "rekit-core": "^2.3.1",
+    "rekit-core": "^2.3.2",
     "rekit-studio": "^2.3.8",
     "request": "^2.85.0",
     "shelljs": "^0.8.0",
@@ -81,7 +81,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "@material-ui/icons": "^1.0.0-beta.43",
-    "material-ui": "^1.0.0-beta.43"
+    "@material-ui/icons": "1.0.0-beta.43",
+    "material-ui": "1.0.0-beta.43"
   }
 }

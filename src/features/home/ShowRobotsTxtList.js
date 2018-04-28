@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { RobotsTxtCard } from '.';
+import { RobotsTxtCard, AutoGrid } from '.';
 
 export class ShowRobotsTxtList extends Component {
   static propTypes = {
@@ -27,7 +27,9 @@ export class ShowRobotsTxtList extends Component {
   render() {
     return (
       <div className="home-show-robots-txt-list">
-        {this.props.home.robotsTxtList.map(website => <RobotsTxtCard website={website} />)}
+        <AutoGrid>
+          {this.props.home.robotsTxtList.map(website => <RobotsTxtCard website={website} />)}
+        </AutoGrid>
       </div>
     );
   }
