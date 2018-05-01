@@ -20,29 +20,14 @@ class AutoGrid extends Component {
     classes: PropTypes.object.isRequired,
   };
 
-  /* Split children array in slice of 3 elements */
-  renderGrid() {
-    const { children } = this.props;
-    const n = children.length;
-    const result = [];
-    for (let i = 0; i < n; i += 3) {
-      result.push(
-        <Grid container spacing={24}>
-          <Grid item xs>{children[i]}</Grid>
-          <Grid item xs>{i + 1 < n ? children[i + 1] : ''}</Grid>
-          <Grid item xs>{i + 2 < n ? children[i + 2] : ''}</Grid>
-        </Grid>
-      );
-    }
-    return result;
-  }
-
   render() {
     const { classes } = this.props;
     return (
       <div className="home-auto-grid">
         <div className={classes.root}>
-          {this.renderGrid()}
+          <Grid container spacing={24}>
+            {this.props.children.map((child, i) => <Grid item xs key={`grid_item_${i}`}>{child}</Grid>)}
+          </Grid>
         </div>
       </div>
     );

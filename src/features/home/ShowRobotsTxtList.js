@@ -28,7 +28,7 @@ export class ShowRobotsTxtList extends Component {
     return (
       <div className="home-show-robots-txt-list">
         <AutoGrid>
-          {this.props.home.robotsTxtList.map(website => <RobotsTxtCard website={website} />)}
+          {this.props.home.robotsTxtList.map((website, i) => <RobotsTxtCard website={website} key={`card_${i}`} />)}
         </AutoGrid>
       </div>
     );
