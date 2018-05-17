@@ -21,24 +21,24 @@ export class ShowRobotsTxtList extends Component {
     const { changePageTitle, fetchRobotsTxtList } = this.props.actions;
     const { pageTitle } = this.props;
     const { backendServer } = this.props.common;
-    
+
     changePageTitle(pageTitle);
     fetchRobotsTxtList(backendServer);
   }
 
   renderGrid() {
     const { robotsTxtList } = this.props.home;
-    
+
     return (
       <AutoGrid>
-        {robotsTxtList.map((website, i) => <RobotsTxtCard website={website} key={`card_${i}`} />)}
+        {robotsTxtList.map(website => <RobotsTxtCard website={website} key={website.robots_txt_url} />)}
       </AutoGrid>
     );
   }
 
   render() {
     const { robotsTxtList } = this.props.home;
-    
+
     return (
       <div className="home-show-robots-txt-list">
         { robotsTxtList && robotsTxtList.length
