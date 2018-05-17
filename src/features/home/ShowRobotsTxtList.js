@@ -23,7 +23,10 @@ export class ShowRobotsTxtList extends Component {
     const { backendServer } = this.props.common;
 
     changePageTitle(pageTitle);
-    fetchRobotsTxtList(backendServer);
+
+    // catch is only for handlyng rejection case; it's useless, but it
+    // could be use, one day, to dispatch an action.
+    fetchRobotsTxtList(backendServer).catch(e => e);
   }
 
   renderGrid() {
