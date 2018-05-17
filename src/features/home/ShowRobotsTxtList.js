@@ -18,18 +18,33 @@ export class ShowRobotsTxtList extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.changePageTitle(this.props.pageTitle);
-
+    const { changePageTitle, fetchRobotsTxtList } = this.props.actions;
+    const { pageTitle } = this.props;
     const { backendServer } = this.props.common;
-    this.props.actions.fetchRobotsTxtList(backendServer);
+    
+    changePageTitle(pageTitle);
+    fetchRobotsTxtList(backendServer);
+  }
+
+  renderGrid() {
+    const { robotsTxtList } = this.props.home;
+    
+    return (
+      <AutoGrid>
+        {robotsTxtList.map((website, i) => <RobotsTxtCard website={website} key={`card_${i}`} />)}
+      </AutoGrid>
+    );
   }
 
   render() {
+    const { robotsTxtList } = this.props.home;
+    
     return (
       <div className="home-show-robots-txt-list">
-        <AutoGrid>
-          {this.props.home.robotsTxtList.map((website, i) => <RobotsTxtCard website={website} key={`card_${i}`} />)}
-        </AutoGrid>
+        { robotsTxtList && robotsTxtList.length
+          ? this.renderGrid()
+          : <p>Empty database or backend service down.</p>
+        }
       </div>
     );
   }
