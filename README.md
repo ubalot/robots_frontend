@@ -1,5 +1,11 @@
 # README
 
+## Bootstrap
+To install local npm packages run
+```bash
+npm install
+```
+
 ## Development mode
 To update local npm packages run
 ```bash
